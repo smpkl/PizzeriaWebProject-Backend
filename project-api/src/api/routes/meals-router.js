@@ -11,6 +11,7 @@ const mealRouter = express.Router();
 // Routes related to meals:
 adminRouter.route("/").get(getAllMeals);
 adminRouter.route("/:id").get(getMealById);
+
 adminRouter.route("/products/:id").get(getMealProducts); // Get products in the meal by meal id
 
 export default mealRouter;
