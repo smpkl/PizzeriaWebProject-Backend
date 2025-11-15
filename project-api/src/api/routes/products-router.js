@@ -7,8 +7,8 @@ import {
 
 const productRouter = express.Router();
 
-adminRouter.route("/products").get(getAllProducts);
+adminRouter.route("/").get(getAllProducts);
 
-adminRouter.route("/products/:id").get(getProductById);
+adminRouter.route("/:id").get(getProductById);
 
 export default productRouter;

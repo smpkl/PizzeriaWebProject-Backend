@@ -9,7 +9,7 @@ import {
 const announcRouter = express.Router();
 
 // Routes related to announcements:
-announcRouter.route("/announc").get(getAllAnnouncements);
-announcRouter.route("/announc/:id").get(getAnnouncementById);
+announcRouter.route("/").get(getAllAnnouncements);
+announcRouter.route("/:id").get(getAnnouncementById);
 
 export default announcRouter;
