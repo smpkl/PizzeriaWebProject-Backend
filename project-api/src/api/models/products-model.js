@@ -6,7 +6,7 @@ const tableName = "products";
  * Fetch all Products and all the info from the table
  * @returns list of Products
  */
-const getAllProducts = async () => {
+const findAllProducts = async () => {
   const [products] = await promisePool.query(`select * from ${tableName}`);
   return products;
 };
@@ -17,7 +17,7 @@ const getAllProducts = async () => {
  * @returns false if not found or Productinformation
  */
 
-const getOneProductById = async (id) => {
+const findOneProductById = async (id) => {
   const [product] = await promisePool.query(
     `select * from ${tableName} where id = ?`,
     [id]
@@ -71,7 +71,7 @@ const addNewProduct = async (product) => {
  * if update goes through it returns JSON {productId: id}
  */
 const modifyProductById = async (id, newInfo) => {
-  const product = await getOneProductById(id);
+  const product = await findOneProductById(id);
   if (product) {
     const { name, ingredients, price, category, description } = product;
     const updateJSON = {
@@ -103,8 +103,8 @@ const modifyProductById = async (id, newInfo) => {
 };
 
 export {
-  getAllProducts,
-  getOneProductById,
+  findAllProducts,
+  findOneProductById,
   getProductsByCategory,
   addNewProduct,
   modifyProductById,
