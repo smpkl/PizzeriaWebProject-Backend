@@ -1,4 +1,4 @@
-
+import promisePool from "../../utils/database.js";
 /**
  * Query for all tags
  * @returns all tags as a list

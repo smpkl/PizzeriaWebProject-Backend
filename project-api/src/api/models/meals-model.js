@@ -1,3 +1,4 @@
+import promisePool from "../../utils/database.js";
 /**
  * Query for all meals
  * @returns all meals as a list

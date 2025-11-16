@@ -1,3 +1,4 @@
+import promisePool from "../../utils/database.js";
 /**
  * query for 
  * @returns list of all coupons

@@ -1,3 +1,4 @@
+import promisePool from "../../utils/database.js";
 /**
  * Query for getting all orders
  * @returns all current orders
