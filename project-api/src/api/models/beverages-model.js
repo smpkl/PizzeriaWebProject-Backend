@@ -1,4 +1,4 @@
-
+import promisePool from "../../utils/database.js";
 // files table name as variable, because name of the table might change
 const tableName = "foods";
 

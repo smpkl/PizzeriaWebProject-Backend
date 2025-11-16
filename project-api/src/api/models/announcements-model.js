@@ -1,3 +1,4 @@
+import promisePool from "../../utils/database.js";
 /**
  * Query for all announcements
  * @returns all announcements as a list

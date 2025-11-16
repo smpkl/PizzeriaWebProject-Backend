@@ -1,4 +1,4 @@
-
+import promisePool from "../../utils/database.js";
 /**
  * Query for all feedbacks
  * @returns all feedbacks as a list
