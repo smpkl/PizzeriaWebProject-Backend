@@ -1,10 +1,14 @@
 import promisePool from "../../utils/database.js";
+
+//SQL have order in its syntax so table should be entered this way
+const tableName = "`order`";
 /**
  * Query for getting all orders
  * @returns all current orders
  */
 const getAllOrders = async () => {
-  return await promisePool.query(`select * from order`);
+  const [orders] = await promisePool.query(`select * from ${tableName}`);
+  return orders;
 };
 
 /**
@@ -13,15 +17,15 @@ const getAllOrders = async () => {
  * @returns false if no orders found, order if found
  */
 const getOneOrderById = async (id) => {
-  const [order] = await promisePool.query(`SELECT * FROM order WHERE id = ?`, [
-    id,
-  ]);
+  const [order] = await promisePool.query(
+    `SELECT * FROM ${tableName} WHERE id = ?`,
+    [id]
+  );
   if (order.length === 0) {
     return false;
   }
-  return order;
+  return order[0];
 };
-
 
 /**
  * Query for all orders per user
@@ -30,8 +34,8 @@ const getOneOrderById = async (id) => {
  */
 const getAllOrdersByUserId = async (userId) => {
   const [orders] = await promisePool.query(
-    `SELECT * FROM ORDER WHERE user_id = ?`,
-    userId
+    `SELECT * FROM ${tableName} WHERE user_id = ?`,
+    [userId]
   );
   if (orders.length === 0) {
     return false;
@@ -48,7 +52,7 @@ const getAllOrdersByUserId = async (userId) => {
 const addNewOrder = async (order) => {
   const { userId, status, orderType, deliveryAddress, pizzeriaAddress, price } =
     order;
-  const sql = `INSERT INTO order (user_id, status, order_type, delivery_address, pizzeria_address, price) 
+  const sql = `INSERT INTO ${tableName} (user_id, status, order_type, delivery_address, pizzeria_address, price) 
                Values (?, ?, ?, ?, ?, ?)`;
   const params = [
     userId,
@@ -77,23 +81,23 @@ const modifyOrderById = async (id, newInfo) => {
   const order = await getOneOrderById(id);
   if (order) {
     const {
-      userId,
+      user_id,
       status,
-      orderType,
-      deliveryAddress,
-      pizzeriaAddress,
+      order_type,
+      delivery_address,
+      pizzeria_address,
       price,
     } = order;
     const updateJSON = {
-      userId: newInfo.userId ?? userId,
+      userId: newInfo.userId ?? user_id,
       status: newInfo.status ?? status,
-      orderType: newInfo.orderType ?? orderType,
-      deliveryAddress: newInfo.deliveryAddress ?? deliveryAddress,
-      pizzeriaAddress: newInfo.pizzeriaAddress ?? pizzeriaAddress,
+      orderType: newInfo.orderType ?? order_type,
+      deliveryAddress: newInfo.deliveryAddress ?? delivery_address,
+      pizzeriaAddress: newInfo.pizzeriaAddress ?? pizzeria_address,
       price: newInfo.price ?? price,
     };
     const sql = `
-    UPDATE order
+    UPDATE ${tableName}
     SET user_id = ?, status = ?, order_type = ?, delivery_address = ?, pizzeria_address = ?, price = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
@@ -114,4 +118,10 @@ const modifyOrderById = async (id, newInfo) => {
   }
 };
 
-export { getAllOrders, getOneOrderById, getAllOrdersByUserId, addNewOrder, modifyOrderById };
+export {
+  getAllOrders,
+  getOneOrderById,
+  getAllOrdersByUserId,
+  addNewOrder,
+  modifyOrderById,
+};
