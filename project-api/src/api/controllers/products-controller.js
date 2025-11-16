@@ -1,4 +1,10 @@
-import { findAllProducts, findProductById } from "../models/products-model.js";
+import {
+  findAllProducts,
+  findOneProductById,
+  getProductsByCategory,
+  addNewProduct,
+  modifyProductById,
+} from "../models/products-model.js";
 
 // For products:
 
@@ -13,7 +19,7 @@ const getAllProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
   try {
-    const product = await findProductById(req.params.id);
+    const product = await findOneProductById(req.params.id);
     console.log(product);
     if (product) {
       res.status(200).json({ message: "Product found", product });
