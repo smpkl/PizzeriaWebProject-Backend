@@ -5,6 +5,7 @@ import {
   getProductsByCategory,
   addNewProduct,
   modifyProductById,
+  removeProduct,
 } from "../models/products-model.js";
 
 // GET Controllers:
@@ -92,10 +93,34 @@ const putProduct = async (req, res) => {
   }
 };
 
+/**
+ * Direct the DELETE Product-request to model
+ */
+const deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const result = await removeProduct(productId);
+    console.log(result);
+    if (result.productId) {
+      res.status(200).json({
+        message: "Product deleted",
+        result,
+      });
+    } else {
+      res.status(400).json({
+        message: "Could not delete product",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting product" });
+  }
+};
+
 export {
   getAllProducts,
   getProductById,
   getAllProductsByCategory,
   postProduct,
   putProduct,
+  deleteProduct,
 };

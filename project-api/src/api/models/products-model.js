@@ -1,6 +1,5 @@
 import promisePool from "../../utils/database.js";
 // files table name as variable, because name of the table might change
-const tableName = "products";
 
 /**
  * Fetch all Products and all the info from the table
@@ -104,10 +103,28 @@ const modifyProductById = async (id, newInfo) => {
   }
 };
 
+/**
+ *
+ * @param {*} id id of Product wanted to delete
+ * @returns false if Product is not found by its id or deletion fails,
+ * if deletion goes through it returns JSON {productId: id}
+ */
+const removeProduct = async (id) => {
+  const result = await promisePool.execute(
+    `DELETE FROM products WHERE id = ?`,
+    [id]
+  );
+  if (result[0].affectedRows === 0) {
+    return false;
+  }
+  return { productId: id };
+};
+
 export {
   findAllProducts,
   findOneProductById,
   getProductsByCategory,
   addNewProduct,
   modifyProductById,
+  removeProduct,
 };
