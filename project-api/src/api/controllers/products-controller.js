@@ -4,6 +4,8 @@ import {
   getProductsByCategory,
   getProductsByCategory,
   addNewProduct,
+  addProductTag,
+  removeProductTag,
   modifyProductById,
   removeProduct,
 } from "../models/products-model.js";
@@ -76,6 +78,43 @@ const postProduct = async (req, res) => {
 };
 
 /**
+ * Direct the POST tags/:id-request to model
+ */
+const postProductTag = async (req, res) => {
+  try {
+    const productId = req.params.productId;
+    const tagId = req.body.tag_id;
+
+    const result = await addProductTag(productId, tagId);
+    if (result) {
+      res.status(200).json({ message: "New tag added for product", result });
+    } else {
+      res.status(400).json({ message: "Could not add tag for product" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error adding tag for product" });
+  }
+};
+
+/**
+ * Direct the DELETE tags/:id-request to model
+ */
+const deleteProductTag = async (req, res) => {
+  try {
+    const productId = req.params.productId;
+    const tagId = req.params.tagId;
+    const result = await removeProductTag(productId, tagId);
+    if (result) {
+      res.status(200).json({ message: "Tag removed from a product", result });
+    } else {
+      res.status(400).json({ message: "Could not remove a tag from product" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error removing tag from a product" });
+  }
+};
+
+/**
  * Direct the PUT Product-request to model
  */
 const putProduct = async (req, res) => {
@@ -121,6 +160,8 @@ export {
   getProductById,
   getAllProductsByCategory,
   postProduct,
+  postProductTag,
+  deleteProductTag,
   putProduct,
   deleteProduct,
 };

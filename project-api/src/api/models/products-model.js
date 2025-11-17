@@ -64,6 +64,54 @@ const addNewProduct = async (product) => {
 };
 
 /**
+ * Query for inserting a new product-tag pair into products_tags table aka adds a tag to a product
+ * @param {*} productId the id of the product to which the tag will be attached to
+ *  @param {*} tagId the id of the tag to which the product will be attached to
+ * @returns false if failed to create an new product-tag pair, JSON {product_id: productId, tag_id: tagId} if completed
+ */
+const addProductTag = async (productId, tagId) => {
+  try {
+    console.log(productId, tagId);
+    const result = await promisePool.execute(
+      " INSERT INTO products_tags (product_id, tag_id) VALUES (?, ?)",
+      [Number(productId), tagId]
+    );
+    console.log(result);
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { product_id: Number(productId), tag_id: tagId };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+/**
+ * Query for removing a product-tag pair from products_tags table aka removes a tag from a product
+ * @param {*} productId the id of the product to which the tag is attached to
+ *  @param {*} tagId the id of the tag to which the product is attached to
+ * @returns false if failed to remove product-tag pair, JSON {product_id: productId, tag_id: tagId} if completed
+ */
+const removeProductTag = async (productId, tagId) => {
+  try {
+    console.log(productId, tagId);
+    const result = await promisePool.execute(
+      " DELETE FROM products_tags WHERE product_id = ? AND tag_id = ?",
+      [Number(productId), Number(tagId)]
+    );
+    console.log(result);
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { product_id: Number(productId), tag_id: Number(tagId) };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+/**
  *
  * @param {*} id id of Product wanted to update
  * @param {*} newInfo info sql of information that is wanted to upgrade.
@@ -125,6 +173,8 @@ export {
   findOneProductById,
   getProductsByCategory,
   addNewProduct,
+  addProductTag,
+  removeProductTag,
   modifyProductById,
   removeProduct,
 };
