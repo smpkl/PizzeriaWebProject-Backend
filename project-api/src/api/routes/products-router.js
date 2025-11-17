@@ -3,14 +3,22 @@ import express from "express";
 import {
   getAllProducts,
   getProductById,
-  getProductTags,
+  getAllProductsByCategory,
+  postProduct,
+  putProduct,
+  deleteProduct,
 } from "../controllers/products-controller.js";
 
-const productRouter = express.Router();
+const productsRouter = express.Router();
 
-adminRouter.route("/").get(getAllProducts);
-adminRouter.route("/:id").get(getProductById);
+productsRouter.route("/").get(getAllProducts).post(postProduct);
+productsRouter
+  .route("/:id")
+  .get(getProductById)
+  .put(putProduct)
+  .delete(deleteProduct);
 
-adminRouter.route("/tags/:id").get(getProductTags); // Get all tags for a specific product
+productRouter.route("/category/:categoryId").get(getAllProductsByCategory); // Get all products in a specific category (parameter = category id)
+// adminRouter.route("/tags/:id").get(getProductTags); // Get all tags for a specific product (Might no longer be needed since products are returned with their tags)
 
-export default productRouter;
+export default productsRouter;

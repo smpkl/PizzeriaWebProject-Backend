@@ -7,7 +7,9 @@ const tableName = "products";
  * @returns list of Products
  */
 const findAllProducts = async () => {
-  const [products] = await promisePool.query(`select * from ${tableName}`);
+  const [products] = await promisePool.query(
+    "SELECT products.*, GROUP_CONCAT(tags.title SEPARATOR ', ') AS tags FROM products LEFT JOIN products_tags ON product_id = products.id LEFT JOIN tags ON products_tags.tag_id = tags.id GROUP BY products.id;"
+  );
   return products;
 };
 
@@ -19,7 +21,7 @@ const findAllProducts = async () => {
 
 const findOneProductById = async (id) => {
   const [product] = await promisePool.query(
-    `select * from ${tableName} where id = ?`,
+    `SELECT products.*, GROUP_CONCAT(tags.title SEPARATOR ', ') AS tags FROM products LEFT JOIN products_tags ON product_id = products.id LEFT JOIN tags ON products_tags.tag_id = tags.id WHERE products.id = ? GROUP BY products.id;`,
     [id]
   );
   if (product.length === 0) {
@@ -30,14 +32,14 @@ const findOneProductById = async (id) => {
 
 /**
  * Query to get all Product by category
- * @param {*} categoriesId category's unique id
+ * @param {*} categoryId category's unique id
  * @returns false if not found and Product list if found
  */
 
-const getProductsByCategory = async (categoriesId) => {
+const getProductsByCategory = async (categoryId) => {
   const [productsByCategory] = await promisePool.query(
-    `SELECT * FROM ${tableName} WHERE category = ?`,
-    [categoriesId]
+    `SELECT products.*, GROUP_CONCAT(tags.title SEPARATOR ', ') AS tags FROM products LEFT JOIN products_tags ON product_id = products.id LEFT JOIN tags ON products_tags.tag_id = tags.id WHERE products.category = ? GROUP BY products.id;`,
+    [categoryId]
   );
   if (productsByCategory.length === 0) {
     return false;
@@ -52,7 +54,7 @@ const getProductsByCategory = async (categoriesId) => {
  */
 const addNewProduct = async (product) => {
   const { name, ingredients, price, category, description } = product;
-  const sql = `INSERT INTO ${tableName} (name, ingredients, price, category, description) 
+  const sql = `INSERT INTO products (name, ingredients, price, category, description) 
         VALUES (?, ?, ?, ?, ?)`;
   const params = [name, ingredients, price, category, description];
   const result = await promisePool.execute(sql, params);
@@ -82,7 +84,7 @@ const modifyProductById = async (id, newInfo) => {
       description: newInfo.description ?? description,
     };
     const sql = `
-    UPDATE ${tableName}
+    UPDATE products
     SET name = ?, ingredients = ?, price = ?, category = ?, description = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [

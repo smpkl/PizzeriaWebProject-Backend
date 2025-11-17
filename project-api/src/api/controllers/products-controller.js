@@ -2,12 +2,16 @@ import {
   findAllProducts,
   findOneProductById,
   getProductsByCategory,
+  getProductsByCategory,
   addNewProduct,
   modifyProductById,
 } from "../models/products-model.js";
 
-// For products:
+// GET Controllers:
 
+/**
+ * Direct the GET all Products-request to model
+ */
 const getAllProducts = async (req, res) => {
   try {
     const products = await findAllProducts();
@@ -17,6 +21,9 @@ const getAllProducts = async (req, res) => {
   }
 };
 
+/**
+ * Direct the GET Product by ID-request to model
+ */
 const getProductById = async (req, res) => {
   try {
     const product = await findOneProductById(req.params.id);
@@ -31,4 +38,64 @@ const getProductById = async (req, res) => {
   }
 };
 
-export { getAllProducts, getProductById };
+/**
+ * Direct the GET all Products by category ID-request to model
+ */
+const getAllProductsByCategory = async (req, res) => {
+  console.log("In controller");
+  try {
+    console.log(req.params.categoryId);
+    const products = await getProductsByCategory(req.params.categoryId);
+    console.log(products);
+    if (products) {
+      res.status(200).json({ message: "Products found", products });
+    } else {
+      res.status(404).json({ message: "Products not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error getting products" });
+  }
+};
+
+/**
+ * Direct the POST Product-request to model
+ */
+const postProduct = async (req, res) => {
+  try {
+    const newProduct = req.body;
+    const result = await addNewProduct(newProduct);
+    if (result.productId) {
+      res.status(200).json({ message: "New product added", result });
+    } else {
+      res.status(400).json({ message: "Could not add product" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error adding product" });
+  }
+};
+
+/**
+ * Direct the PUT Product-request to model
+ */
+const putProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const newProductInfo = req.body;
+    const result = await modifyProductById(productId, newProductInfo);
+    if (result.productId) {
+      res.status(200).json({ message: "Product info updated", result });
+    } else {
+      res.status(400).json({ message: "Could not update product" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error updating product" });
+  }
+};
+
+export {
+  getAllProducts,
+  getProductById,
+  getAllProductsByCategory,
+  postProduct,
+  putProduct,
+};
