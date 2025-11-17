@@ -17,7 +17,6 @@ const findAllProducts = async () => {
  * @param {*} id is Product id
  * @returns false if not found or Productinformation
  */
-
 const findOneProductById = async (id) => {
   const [product] = await promisePool.query(
     `SELECT products.*, GROUP_CONCAT(tags.title SEPARATOR ', ') AS tags FROM products LEFT JOIN products_tags ON product_id = products.id LEFT JOIN tags ON products_tags.tag_id = tags.id WHERE products.id = ? GROUP BY products.id;`,
@@ -34,7 +33,6 @@ const findOneProductById = async (id) => {
  * @param {*} categoryId category's unique id
  * @returns false if not found and Product list if found
  */
-
 const getProductsByCategory = async (categoryId) => {
   const [productsByCategory] = await promisePool.query(
     `SELECT products.*, GROUP_CONCAT(tags.title SEPARATOR ', ') AS tags FROM products LEFT JOIN products_tags ON product_id = products.id LEFT JOIN tags ON products_tags.tag_id = tags.id WHERE products.category = ? GROUP BY products.id;`,
@@ -44,6 +42,22 @@ const getProductsByCategory = async (categoryId) => {
     return false;
   }
   return productsByCategory;
+};
+
+/**
+ * Query to get all Products by tag
+ * @param {*} tagId tag's unique id
+ * @returns false if not found and tag list if found
+ */
+const getProductsByTag = async (tagId) => {
+  const [productsByTag] = await promisePool.execute(
+    `SELECT products.* FROM products JOIN products_tags ON product_id = products.id WHERE products_tags.tag_id = ?`,
+    [tagId]
+  );
+  if (productsByTag.length === 0) {
+    return false;
+  }
+  return productsByTag;
 };
 
 /**
@@ -172,6 +186,7 @@ export {
   findAllProducts,
   findOneProductById,
   getProductsByCategory,
+  getProductsByTag,
   addNewProduct,
   addProductTag,
   removeProductTag,

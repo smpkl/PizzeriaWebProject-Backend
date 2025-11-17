@@ -13,6 +13,4 @@ const categoriesRouter = express.Router();
 categoriesRouter.route("/").get(getAllCategories);
 categoriesRouter.route("/:id").get(getCategoryById);
 
-categoriesRouter.route("/products/:id").get(getCategoryProducts); // Get all products in a certain category by category id (i.e. get all beverages, get all pizzas, get all extras etc.)
-
 export default categoriesRouter;

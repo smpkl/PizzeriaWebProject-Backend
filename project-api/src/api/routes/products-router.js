@@ -4,6 +4,7 @@ import {
   getAllProducts,
   getProductById,
   getAllProductsByCategory,
+  getProductByTagId,
   postProduct,
   postProductTag,
   deleteProductTag,
@@ -26,6 +27,6 @@ productsRouter
   .delete(deleteProductTag); // Remove a tag from a product (parameter1 = product id, parameter2 = tag id)
 
 productsRouter.route("/category/:categoryId").get(getAllProductsByCategory); // Get all products in a specific category (parameter = category id)
-// adminRouter.route("/tags/:id").get(getProductTags); // Get all tags for a specific product (Might no longer be needed since products are returned with their tags)
+productsRouter.route("/tags/:tagId").get(getProductByTagId); // Get all products with a specific tag
 
 export default productsRouter;

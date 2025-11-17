@@ -2,7 +2,7 @@ import {
   findAllProducts,
   findOneProductById,
   getProductsByCategory,
-  getProductsByCategory,
+  getProductsByTag,
   addNewProduct,
   addProductTag,
   removeProductTag,
@@ -17,7 +17,7 @@ import {
  */
 const getAllProducts = async (req, res) => {
   try {
-    const products = await findAllProducts();
+    const [products] = await findAllProducts();
     res.status(200).json({ message: "Products found", products });
   } catch (error) {
     res.status(500).json({ message: "Error getting products" });
@@ -29,15 +29,14 @@ const getAllProducts = async (req, res) => {
  */
 const getProductById = async (req, res) => {
   try {
-    const product = await findOneProductById(req.params.id);
-    console.log(product);
+    const [product] = await findOneProductById(req.params.id);
     if (product) {
       res.status(200).json({ message: "Product found", product });
     } else {
       res.status(404).json({ message: "Product not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting meal" });
+    res.status(500).json({ message: "Error getting product" });
   }
 };
 
@@ -45,11 +44,24 @@ const getProductById = async (req, res) => {
  * Direct the GET all Products by category ID-request to model
  */
 const getAllProductsByCategory = async (req, res) => {
-  console.log("In controller");
   try {
-    console.log(req.params.categoryId);
-    const products = await getProductsByCategory(req.params.categoryId);
-    console.log(products);
+    const [products] = await getProductsByCategory(req.params.categoryId);
+    if (products) {
+      res.status(200).json({ message: "Products found", products });
+    } else {
+      res.status(404).json({ message: "Products not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error getting products" });
+  }
+};
+
+/**
+ * Direct the GET all Products by tag ID-request to model
+ */
+const getProductsByTagId = async (req, res) => {
+  try {
+    const [products] = await getProductsByTag(req.params.tagId);
     if (products) {
       res.status(200).json({ message: "Products found", products });
     } else {
@@ -159,6 +171,7 @@ export {
   getAllProducts,
   getProductById,
   getAllProductsByCategory,
+  getProductsByTagId,
   postProduct,
   postProductTag,
   deleteProductTag,
