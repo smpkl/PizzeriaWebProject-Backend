@@ -42,7 +42,7 @@ const addNewTag = async (tagInfo) => {
 /**
  * Query for removing a tag
  * @param {*} tagId tag unique id
- * @returns false if tag could not be deleted, tagId if a new tag was deleted
+ * @returns false if tag could not be deleted, tagId if a tag was deleted
  */
 const removeTag = async (tagId) => {
   console.log(tagId);

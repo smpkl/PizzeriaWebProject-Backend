@@ -4,13 +4,19 @@ import express from "express";
 import {
   getAllCategories,
   getCategoryById,
-  getCategoryProducts,
+  postCategory,
+  deleteCategory,
+  putCategory,
 } from "../controllers/categories-controller.js";
 
 const categoriesRouter = express.Router();
 
-// Routes related to announcements:
-categoriesRouter.route("/").get(getAllCategories);
-categoriesRouter.route("/:id").get(getCategoryById);
+// Routes related to categories:
+categoriesRouter.route("/").get(getAllCategories).post(postCategory);
+categoriesRouter
+  .route("/:id")
+  .get(getCategoryById)
+  .delete(deleteCategory)
+  .put(putCategory);
 
 export default categoriesRouter;
