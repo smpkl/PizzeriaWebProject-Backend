@@ -4,15 +4,20 @@ import express from "express";
 import {
   getAllFeedbacks,
   getFeedbackById,
+  getAllUsersFeedbacks,
   getFeedbacksByStatus,
+  addFeedback,
+  updateFeedback,
 } from "../controllers/feedbacks-controller.js";
 
 const feedbacksRouter = express.Router();
 
 // Routes related to announcements:
-feedbacksRouter.route("/").get(getAllFeedbacks);
-feedbacksRouter.route("/:id").get(getFeedbackById);
+feedbacksRouter.route("/").get(getAllFeedbacks).post(addFeedback).put(updateFeedback);
+feedbacksRouter.route("/:id").get(getFeedbackById).get(getAllUsersFeedbacks);
 
+
+//sama kun orders, onkohan tarpeellinen erillinen kutsu vai filteröidää/mapataa backissa se.
 feedbacksRouter.route("/status/:status").get(getFeedbacksByStatus); // Get all feedbacks that have a certain status (uusi, käsitelty, arkistoitu)
 
 export default feedbacksRouter;
