@@ -71,9 +71,31 @@ const modifyCategoryById = async (id, newInfo) => {
   }
 };
 
+/**
+ * Query for removing a category
+ * @param {*} categId category unique id
+ * @returns false if category could not be deleted, categoty_Id if category was deleted
+ */
+const removeCategory = async (categId) => {
+  try {
+    const result = await promisePool.execute(
+      `DELETE FROM categories WHERE id = ?`,
+      [categId]
+    );
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { category_Id: categId };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export {
   findAllCategories,
   findCategoryById,
   modifyCategoryById,
   addNewCategory,
+  removeCategory,
 };
