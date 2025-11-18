@@ -32,7 +32,7 @@ const getOrderById = async (req, res) => {
 
 const getAllUsersOrders = async (req, res) => {
   try {
-    const orders = await findMealProducts(req.params.id);
+    const orders = await findAllOrdersByUserId(req.params.id);
     if (orders) {
       res.status(200).json({ message: "User orders found", orders });
     } else {
