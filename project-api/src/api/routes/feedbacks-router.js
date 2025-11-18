@@ -13,8 +13,8 @@ import {
 const feedbacksRouter = express.Router();
 
 // Routes related to announcements:
-feedbacksRouter.route("/").get(getAllFeedbacks).post(addFeedback).put(updateFeedback);
-feedbacksRouter.route("/:id").get(getFeedbackById).get(getAllUsersFeedbacks);
+feedbacksRouter.route("/").get(getAllFeedbacks).post(addFeedback);
+feedbacksRouter.route("/:id").get(getFeedbackById).get(getAllUsersFeedbacks).put(updateFeedback);
 
 
 //sama kun orders, onkohan tarpeellinen erillinen kutsu vai filteröidää/mapataa backissa se.

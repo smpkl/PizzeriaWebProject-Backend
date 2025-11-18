@@ -12,8 +12,8 @@ import {
 const orderRouter = express.Router();
 
 // Routes related to announcements:
-orderRouter.route("/").get(getAllOrders).post(addOrder).put(updateOrder);
-orderRouter.route("/:id").get(getOrderById);
+orderRouter.route("/").get(getAllOrders).post(addOrder);
+orderRouter.route("/:id").get(getOrderById).put(updateOrder);
 orderRouter.route("/user/:id").get(getAllUsersOrders); // Get order by user id
 
 
