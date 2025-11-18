@@ -71,9 +71,21 @@ const modifyCategoryById = async (id, newInfo) => {
   }
 };
 
+const removeCategory = async (id) => {
+  const result = await promisePool.execute(
+    `DELETE FROM categories WHERE id = ?`,
+    [id]
+  );
+  if (result[0].affectedRows === 0) {
+    return false;
+  }
+  return { categoryId: id };
+};
+
 export {
   findAllCategories,
   findCategoryById,
   modifyCategoryById,
   addNewCategory,
+  removeCategory,
 };
