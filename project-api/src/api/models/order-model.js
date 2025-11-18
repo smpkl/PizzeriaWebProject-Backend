@@ -6,7 +6,7 @@ const tableName = "`order`";
  * Query for getting all orders
  * @returns all current orders
  */
-const getAllOrders = async () => {
+const findAllOrders = async () => {
   const [orders] = await promisePool.query(`select * from ${tableName}`);
   return orders;
 };
@@ -16,7 +16,7 @@ const getAllOrders = async () => {
  * @param {*} id orders id
  * @returns false if no orders found, order if found
  */
-const getOneOrderById = async (id) => {
+const findOneOrderById = async (id) => {
   const [order] = await promisePool.query(
     `SELECT * FROM ${tableName} WHERE id = ?`,
     [id]
@@ -32,7 +32,7 @@ const getOneOrderById = async (id) => {
  * @param {*} userId users id
  * @returns false if no orders found, list of orders if found
  */
-const getAllOrdersByUserId = async (userId) => {
+const findAllOrdersByUserId = async (userId) => {
   const [orders] = await promisePool.query(
     `SELECT * FROM ${tableName} WHERE user_id = ?`,
     [userId]
@@ -78,7 +78,7 @@ const addNewOrder = async (order) => {
  * if update goes through it returns JSON {orderId: id}
  */
 const modifyOrderById = async (id, newInfo) => {
-  const order = await getOneOrderById(id);
+  const order = await findOneOrderById(id);
   if (order) {
     const {
       user_id,
@@ -119,9 +119,9 @@ const modifyOrderById = async (id, newInfo) => {
 };
 
 export {
-  getAllOrders,
-  getOneOrderById,
-  getAllOrdersByUserId,
+  findAllOrders,
+  findOneOrderById,
+  findAllOrdersByUserId,
   addNewOrder,
   modifyOrderById,
 };
