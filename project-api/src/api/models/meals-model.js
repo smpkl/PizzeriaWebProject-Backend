@@ -91,4 +91,25 @@ const modifyMealById = async (id, newInfo) => {
   }
 };
 
-export { findAllMeals, findMealById, findMealProducts, modifyMealById, addNewMeal };
+/**
+ * Query for removing a meal
+ * @param {*} id meal unique id
+ * @returns false if meal could not be deleted, meal_Id if coupon was deleted
+ */
+const removeMeal = async (id) => {
+  try {
+    const result = await promisePool.execute(
+      `DELETE FROM meals WHERE id = ?`,
+      [id]
+    );
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { meal_Id: id };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export { findAllMeals, findMealById, findMealProducts, modifyMealById, addNewMeal, removeMeal };

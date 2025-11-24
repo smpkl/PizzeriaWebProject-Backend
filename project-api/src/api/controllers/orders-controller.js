@@ -4,6 +4,7 @@ import {
   findAllOrdersByUserId,
   addNewOrder,
   modifyOrderById,
+  removeOrder,
 } from "../models/order-model.js";
 
 // For meals:
@@ -57,16 +58,30 @@ const addOrder = async (req, res) => {
 };
 
 const updateOrder = async (req, res) => {
-    try {
-        const updateComplete = await modifyOrderById(req.body);
-        if (updateComplete) {
-            res.status(200).json( {message: "Update was successfull"})
-        } else {
-            res.status(400).json({ message: "Check your request"})
-        }
-    } catch (error) {
-        res.status(500).json({ message: "Error updating a order"})
+  try {
+    const updateComplete = await modifyOrderById(req.body);
+    if (updateComplete) {
+      res.status(200).json({ message: "Update was successfull" });
+    } else {
+      res.status(400).json({ message: "Check your request" });
     }
-}
+  } catch (error) {
+    res.status(500).json({ message: "Error updating a order" });
+  }
+};
 
-export { getAllOrders, getOrderById, getAllUsersOrders, addOrder, updateOrder };
+const deleteOrder = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await removeOrder(id);
+    if (result) {
+      res.status(200).json({ message: "Order deleted", result });
+    } else {
+      res.status(400).json({ message: "Could not delete order" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting order" });
+  }
+};
+
+export { getAllOrders, getOrderById, getAllUsersOrders, addOrder, updateOrder, deleteOrder };

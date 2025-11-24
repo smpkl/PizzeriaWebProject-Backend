@@ -87,4 +87,25 @@ const modifyCouponById = async (id, newInfo) => {
   }
 };
 
-export { findAllCoupons, findCouponById, modifyCouponById, addNewCoupon };
+/**
+ * Query for removing a coupon
+ * @param {*} id coupon unique id
+ * @returns false if coupon could not be deleted, coupon_Id if coupon was deleted
+ */
+const removeCoupon = async (id) => {
+  try {
+    const result = await promisePool.execute(
+      `DELETE FROM coupons WHERE id = ?`,
+      [id]
+    );
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { coupon_Id: id };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export { findAllCoupons, findCouponById, modifyCouponById, addNewCoupon, removeCoupon };

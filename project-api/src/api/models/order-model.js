@@ -118,10 +118,32 @@ const modifyOrderById = async (id, newInfo) => {
   }
 };
 
+/**
+ * Query for removing a order
+ * @param {*} id order unique id
+ * @returns false if order could not be deleted, order_Id if coupon was deleted
+ */
+const removeOrder = async (id) => {
+  try {
+    const result = await promisePool.execute(
+      `DELETE FROM ${tableName} WHERE id = ?`,
+      [id]
+    );
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { order_Id: id };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export {
   findAllOrders,
   findOneOrderById,
   findAllOrdersByUserId,
   addNewOrder,
   modifyOrderById,
+  removeOrder,
 };

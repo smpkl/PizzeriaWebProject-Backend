@@ -3,6 +3,7 @@ import {
   findCouponById,
   modifyCouponById,
   addNewCoupon,
+  removeCoupon,
 } from "../models/coupons-model";
 
 const getAllCoupons = async (req, res) => {
@@ -53,4 +54,18 @@ const updateCoupon = async (req, res) => {
   }
 };
 
-export { getAllCoupons, getCouponById, addCoupon, updateCoupon };
+const deleteCoupon = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await removeCoupon(id);
+    if (result) {
+      res.status(200).json({ message: "Coupon deleted", result });
+    } else {
+      res.status(400).json({ message: "Could not delete coupon" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting coupon" });
+  }
+};
+
+export { getAllCoupons, getCouponById, addCoupon, updateCoupon, deleteCoupon };
