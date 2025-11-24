@@ -2,6 +2,7 @@ import {
   findAllMeals,
   findMealById,
   findMealProducts,
+  removeMeal,
 } from "../models/meals-model.js";
 
 // For meals:
@@ -43,4 +44,18 @@ const getMealProducts = async (req, res) => {
   }
 };
 
-export { getAllMeals, getMealById, getMealProducts };
+const deleteMeal = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await removeMeal(id);
+    if (result) {
+      res.status(200).json({ message: "Meal deleted", result });
+    } else {
+      res.status(400).json({ message: "Could not delete meal" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting meal" });
+  }
+};
+
+export { getAllMeals, getMealById, getMealProducts, deleteMeal };

@@ -104,10 +104,32 @@ const modifyFeedbackById = async (id, newInfo) => {
   }
 };
 
+/**
+ * Query for removing a feedback
+ * @param {*} id feedback unique id
+ * @returns false if feedback could not be deleted, feedback_Id if feedback was deleted
+ */
+const removeFeedback = async (id) => {
+  try {
+    const result = await promisePool.execute(
+      `DELETE FROM feedbacks WHERE id = ?`,
+      [id]
+    );
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { feedback_Id: id };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export {
   findAllFeedbacks,
   findFeedbackById,
   findFeedbacksByUserId,
   addNewFeedback,
   modifyFeedbackById,
+  removeFeedback
 };

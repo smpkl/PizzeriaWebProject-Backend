@@ -1,6 +1,7 @@
 import express from "express";
 // import { authenticateToken } from "../../middlewares/authentication.js";
 import {
+  deleteMeal,
   getAllMeals,
   getMealById,
   getMealProducts,
@@ -9,9 +10,9 @@ import {
 const mealRouter = express.Router();
 
 // Routes related to meals:
-adminRouter.route("/").get(getAllMeals);
-adminRouter.route("/:id").get(getMealById);
+mealRouter.route("/").get(getAllMeals).delete(deleteMeal);
+mealRouter.route("/:id").get(getMealById);
 
-adminRouter.route("/products/:id").get(getMealProducts); // Get products in the meal by meal id
+mealRouter.route("/products/:id").get(getMealProducts); // Get products in the meal by meal id
 
 export default mealRouter;

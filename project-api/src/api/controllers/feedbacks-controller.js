@@ -4,6 +4,7 @@ import {
   findFeedbacksByUserId,
   addNewFeedback,
   modifyFeedbackById,
+  removeFeedback,
 } from "../models/feedbacks-model";
 
 const getAllFeedbacks = async (req, res) => {
@@ -67,10 +68,25 @@ const updateFeedback = async (req, res) => {
   }
 };
 
+const deleteFeedback = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await removeFeedback(id);
+    if (result) {
+      res.status(200).json({ message: "Feedback deleted", result });
+    } else {
+      res.status(400).json({ message: "Could not feedback coupon" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting feedback" });
+  }
+};
+
 export {
   getAllFeedbacks,
   getFeedbackById,
   getAllUsersFeedbacks,
   addFeedback,
   updateFeedback,
+  deleteFeedback
 };
