@@ -3,10 +3,10 @@ import {
   postAdminLogin,
   postUserLogin,
 } from "../controllers/auth-controller.js";
-import { authenticateToken } from "../../middlewares/authentication.js";
 
 const authRouter = express.Router();
 
+// Laitoin nämä erikseen sillä ajatuksella, että toisella kirjaudutaan sinne admin sivustolle (tarkistaa käyttäjän roolin) ja toisella perussivustolle.
 authRouter.route("/admin/login").post(postAdminLogin);
 authRouter.route("/user/login").post(postUserLogin);
 

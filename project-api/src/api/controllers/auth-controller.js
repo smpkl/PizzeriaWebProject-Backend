@@ -1,37 +1,74 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { findAdminByLastnameAndFirstname } from "../models/admin-model.js";
+import { findUserByEmail } from "../models/user-model.js";
 import "dotenv/config";
 
+/**
+ * For logging in to the admin site: Find user by email via user model, check if they are an admin and check password match:
+ */
 const postAdminLogin = async (req, res, next) => {
-  console.log("Admin Login", req.body);
-  const admin = await findAdminByLastnameAndFirstname(
-    req.body.last_name,
-    req.body.first_name
-  );
-  if (!admin) {
-    next({ status: 400, message: "User was not found" });
+  const user = await findUserByEmail(req.body.email);
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
     return;
   }
 
-  const passwordMatch = await bcrypt.compare(req.body.password, admin.password);
+  if (user.role !== "admin") {
+    res.status(403).json({ message: "Forbidden" });
+    return;
+  }
+
+  const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
   if (!passwordMatch) {
-    next({ status: 401, message: "Unauthorized" });
+    res.status(401).json({ message: "Unauthorized" });
     return;
   }
 
-  const adminDetails = {
-    admin_id: admin.id,
-    firstname: admin.first_name,
-    lastname: admin.last_name,
-    email: admin.email,
+  const userDetails = {
+    user_id: user.id,
+    firstname: user.first_name,
+    lastname: user.last_name,
+    email: user.email,
+    role: user.role,
   };
 
-  const token = jwt.sign(adminDetails, process.env.JWT_SECRET, {
+  const token = jwt.sign(userDetails, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
-  res.json({ admin: adminDetails, token });
+  res.json({ user: userDetails, token });
 };
 
-export { postAdminLogin };
+/**
+ * For logging in to the regular site: Find user by email via user model and check password match:
+ */
+const postUserLogin = async (req, res, next) => {
+  const user = await findUserByEmail(req.body.email);
+
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    return;
+  }
+
+  const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+
+  if (!passwordMatch) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const userDetails = {
+    user_id: user.id,
+    firstname: user.first_name,
+    lastname: user.last_name,
+    email: user.email,
+    role: user.role,
+  };
+
+  const token = jwt.sign(userDetails, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+  res.json({ user: userDetails, token });
+};
+
+export { postAdminLogin, postUserLogin };
