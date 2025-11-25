@@ -5,7 +5,7 @@ import {
   addNewFeedback,
   modifyFeedbackById,
   removeFeedback,
-} from "../models/feedbacks-model";
+} from "./feedbacks-model.js";
 
 const getAllFeedbacks = async (req, res) => {
   try {

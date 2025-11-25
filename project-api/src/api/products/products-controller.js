@@ -8,7 +8,7 @@ import {
   removeProductTag,
   modifyProductById,
   removeProduct,
-} from "../models/products-model.js";
+} from "./products-model.js";
 
 // GET Controllers:
 

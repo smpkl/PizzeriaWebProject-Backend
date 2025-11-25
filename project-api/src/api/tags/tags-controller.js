@@ -4,7 +4,7 @@ import {
   getOneTagById,
   removeTag,
   updateTag,
-} from "../models/tags-model";
+} from "./tags-model.js";
 
 /**
  * Direct the GET all tags-request to model

@@ -5,11 +5,10 @@ import {
   getAllFeedbacks,
   getFeedbackById,
   getAllUsersFeedbacks,
-  getFeedbacksByStatus,
   addFeedback,
   updateFeedback,
   deleteFeedback,
-} from "../controllers/feedbacks-controller.js";
+} from "./feedbacks-controller.js";
 
 const feedbacksRouter = express.Router();
 
@@ -23,6 +22,6 @@ feedbacksRouter
   .delete(deleteFeedback);
 
 //sama kun orders, onkohan tarpeellinen erillinen kutsu vai filteröidää/mapataa backissa se.
-feedbacksRouter.route("/status/:status").get(getFeedbacksByStatus); // Get all feedbacks that have a certain status (uusi, käsitelty, arkistoitu)
+//feedbacksRouter.route("/status/:status").get(getFeedbacksByStatus); // Get all feedbacks that have a certain status (uusi, käsitelty, arkistoitu)
 
 export default feedbacksRouter;

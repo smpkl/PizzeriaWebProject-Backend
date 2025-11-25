@@ -5,7 +5,7 @@ import {
   getAllMeals,
   getMealById,
   getMealProducts,
-} from "../controllers/meals-controller.js";
+} from "./meals-controller.js";
 
 const mealRouter = express.Router();
 
