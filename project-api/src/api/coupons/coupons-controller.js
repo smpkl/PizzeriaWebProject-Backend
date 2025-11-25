@@ -4,7 +4,7 @@ import {
   modifyCouponById,
   addNewCoupon,
   removeCoupon,
-} from "../models/coupons-model.js";
+} from "./coupons-model.js";
 
 const getAllCoupons = async (req, res) => {
   try {

@@ -3,7 +3,7 @@ import {
   findMealById,
   findMealProducts,
   removeMeal,
-} from "../models/meals-model.js";
+} from "./meals-model.js";
 
 // For meals:
 

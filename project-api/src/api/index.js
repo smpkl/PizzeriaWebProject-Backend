@@ -1,13 +1,13 @@
 import express from "express";
 //import adminRouter from "./routes/admin-router.js";
-import productsRouter from "./routes/products-router.js";
-import mealsRouter from "./routes/meals-router.js";
-import tagsRouter from "./routes/tags-router.js";
-import categoriesRouter from "./routes/categories-router.js";
-import feedbacksRouter from "./routes/feedbacks-router.js";
-import announcementsRouter from "./routes/announcements-router.js";
-import ordersRouter from "./routes/orders-router.js";
-import couponsRouter from "./routes/coupons-router.js";
+import productsRouter from "./products/products-router.js";
+import mealsRouter from "./meals/meals-router.js";
+import tagsRouter from "./tags/tags-router.js";
+import categoriesRouter from "./categories/categories-router.js";
+import feedbacksRouter from "./feedbacks/feedbacks-router.js";
+import announcementsRouter from "./announcement/announcements-router.js";
+import ordersRouter from "./orders/orders-router.js";
+import couponsRouter from "./coupons/coupons-router.js";
 
 const router = express.Router();
 

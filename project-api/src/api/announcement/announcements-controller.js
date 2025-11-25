@@ -5,7 +5,7 @@ import {
   addNewAnnouncement,
   modifyAnnouncementById,
   removeAnnouncement,
-} from "../models/announcements-model.js";
+} from "./announcements-model.js";
 
 const getAllAnnouncements = async (req, res) => {
   try {

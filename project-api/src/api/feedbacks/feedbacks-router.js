@@ -8,7 +8,7 @@ import {
   addFeedback,
   updateFeedback,
   deleteFeedback,
-} from "../controllers/feedbacks-controller.js";
+} from "./feedbacks-controller.js";
 
 const feedbacksRouter = express.Router();
 

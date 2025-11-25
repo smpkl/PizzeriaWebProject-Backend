@@ -10,7 +10,7 @@ import {
   deleteProductTag,
   putProduct,
   deleteProduct,
-} from "../controllers/products-controller.js";
+} from "./products-controller.js";
 
 const productsRouter = express.Router();
 

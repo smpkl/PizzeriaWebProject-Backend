@@ -7,7 +7,7 @@ import {
   getTagById,
   postTag,
   putTag,
-} from "../controllers/tags-controller.js";
+} from "./tags-controller.js";
 
 const tagsRouter = express.Router();
 

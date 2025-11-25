@@ -5,7 +5,7 @@ import {
   addNewOrder,
   modifyOrderById,
   removeOrder,
-} from "../models/order-model.js";
+} from "./order-model.js";
 
 // For meals:
 
