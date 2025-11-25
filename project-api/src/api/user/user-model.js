@@ -32,7 +32,7 @@ const findOneUserById = async (id) => {
 const findOneUserByEmail = async (email) => {
   const [user] = await promisePool.query(
     `SELECT * FROM users WHERE email = ?`,
-    [id]
+    [email]
   );
   if (user.length === 0) {
     return false;
