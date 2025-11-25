@@ -66,7 +66,7 @@ const postMeal = async (req, res) => {
 };
 
 /**
- * Direct the PUT ;eal-request to model
+ * Direct the PUT meals/:id-request to model
  */
 const putMeal = async (req, res) => {
   try {
