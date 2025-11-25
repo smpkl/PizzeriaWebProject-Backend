@@ -7,44 +7,44 @@ import {
   removeAnnouncement,
 } from "./announcements-model.js";
 
-const getAllAnnouncements = async (req, res) => {
+const getAllAnnouncements = async (req, res, next) => {
   try {
     const results = await findAllAnnouncements();
     res.status(200).json({ message: "Announcements found", results });
   } catch (error) {
-    res.status(500).json({ message: "Error getting meals" });
+    next({ status: 500, message: "Error getting meals" });
   }
 };
 
-const getAnnouncementById = async (req, res) => {
+const getAnnouncementById = async (req, res, next) => {
   try {
     const results = await findAnnouncementById(req.params.id);
     console.log(results);
     if (results) {
       res.status(200).json({ message: "Announcement found", results });
     } else {
-      res.status(404).json({ message: "Announcement not found" });
+      next({ status: 404, message: "Announcement not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting announcements" });
+    next({ status: 500, message: "Error getting announcements" });
   }
 };
 
-const postAnnouncement = async (req, res) => {
+const postAnnouncement = async (req, res, next) => {
   try {
     const newAnnouncement = req.body;
     const result = await addNewAnnouncement(newAnnouncement);
     if (result.announcementId) {
       res.status(200).json({ message: "New announcement added", result });
     } else {
-      res.status(400).json({ message: "Could not add announcement" });
+      next({ status: 400, message: "Could not add announcement" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error adding announcement" });
+    next({ status: 500, message: "Error adding announcement" });
   }
 };
 
-const putAnnouncement = async (req, res) => {
+const putAnnouncement = async (req, res, next) => {
   try {
     const announcementId = req.params.id;
     const newAnnouncementInfo = req.body;
@@ -55,14 +55,14 @@ const putAnnouncement = async (req, res) => {
     if (result.announcementId) {
       res.status(200).json({ message: "Announcement info updated", result });
     } else {
-      res.status(400).json({ message: "Could not update announcement" });
+      next({ status: 400, message: "Could not update announcement" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error updating announcement" });
+    next({ status: 500, message: "Error updating announcement" });
   }
 };
 
-const deleteAnnouncement = async (req, res) => {
+const deleteAnnouncement = async (req, res, next) => {
   try {
     const announcementId = req.params.id;
     const result = await removeAnnouncement(announcementId);
@@ -73,12 +73,10 @@ const deleteAnnouncement = async (req, res) => {
         result,
       });
     } else {
-      res.status(400).json({
-        message: "Could not delete announcement",
-      });
+      next({ status: 400, message: "Could not delete announcement" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error deleting announcement" });
+    next({ status: 500, message: "Error deleting announcement" });
   }
 };
 

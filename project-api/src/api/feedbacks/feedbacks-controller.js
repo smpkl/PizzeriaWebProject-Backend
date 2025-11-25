@@ -7,78 +7,78 @@ import {
   removeFeedback,
 } from "./feedbacks-model.js";
 
-const getAllFeedbacks = async (req, res) => {
+const getAllFeedbacks = async (req, res, next) => {
   try {
     const feedbacks = await findAllFeedbacks();
-    res.status(200).json({ message: "Orders found", feedbacks });
+    res.status(200).json({ message: "Feedbacks found", feedbacks });
   } catch (error) {
-    res.status(500).json({ message: "Error getting orders" });
+    next({ status: 500, message: "Error getting feedbacks" });
   }
 };
 
-const getFeedbackById = async (req, res) => {
+const getFeedbackById = async (req, res, next) => {
   try {
     const feedback = await findFeedbackById(req.params.id);
     if (feedback) {
-      res.status(200).json({ message: "Order found", feedback });
+      res.status(200).json({ message: "Feedback found", feedback });
     } else {
-      res.status(404).json({ message: "Order not found" });
+      next({ status: 404, message: "Feedback not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting order" });
+    next({ status: 500, message: "Error getting feedback" });
   }
 };
 
-const getAllUsersFeedbacks = async (req, res) => {
+const getAllUsersFeedbacks = async (req, res, next) => {
   try {
     const feedbacks = await findFeedbacksByUserId(req.params.id);
     if (feedbacks) {
-      res.status(200).json({ message: "User orders found", feedbacks });
+      res.status(200).json({ message: "User feedback found", feedbacks });
     } else {
-      res.status(404).json({ message: "User orders not found" });
+      next({ status: 404, message: "User feedbacks not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting user orders" });
+    next({ status: 500, message: "Error getting user feedbacks" });
   }
 };
 
-const addFeedback = async (req, res) => {
+const addFeedback = async (req, res, next) => {
   try {
     const newFeedbackAdded = await addNewFeedback(req.body);
     if (newFeedbackAdded) {
-      res.status(201).json({ message: "New order added successfully" });
+      res.status(201).json({ message: "New feedback added successfully" });
     } else {
-      res.status(400).json({ message: "Check your request" });
+      next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error adding new order" });
+    next({ status: 500, message: "Error adding new feedback" });
   }
 };
 
-const updateFeedback = async (req, res) => {
+const updateFeedback = async (req, res, next) => {
   try {
     const updateComplete = await modifyFeedbackById(req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Update was successfull" });
     } else {
-      res.status(400).json({ message: "Check your request" });
+      next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error updating a order" });
+    next({ status: 500, message: "Error updating feedback" });
   }
 };
 
-const deleteFeedback = async (req, res) => {
+const deleteFeedback = async (req, res, next) => {
   try {
     const id = req.params.id;
     const result = await removeFeedback(id);
     if (result) {
       res.status(200).json({ message: "Feedback deleted", result });
     } else {
-      res.status(400).json({ message: "Could not feedback coupon" });
+      next({ status: 400, message: "Could not delete feedback" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error deleting feedback" });
+    next({ status: 500, message: "Error deleting feedback" });
   }
 };
 
@@ -88,5 +88,5 @@ export {
   getAllUsersFeedbacks,
   addFeedback,
   updateFeedback,
-  deleteFeedback
+  deleteFeedback,
 };

@@ -15,84 +15,84 @@ import {
 /**
  * Direct the GET all Products-request to model
  */
-const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res, next) => {
   try {
     const [products] = await findAllProducts();
     res.status(200).json({ message: "Products found", products });
   } catch (error) {
-    res.status(500).json({ message: "Error getting products" });
+    next({ status: 500, message: "Error getting products" });
   }
 };
 
 /**
  * Direct the GET Product by ID-request to model
  */
-const getProductById = async (req, res) => {
+const getProductById = async (req, res, next) => {
   try {
     const [product] = await findOneProductById(req.params.id);
     if (product) {
       res.status(200).json({ message: "Product found", product });
     } else {
-      res.status(404).json({ message: "Product not found" });
+      next({ status: 404, message: "Product not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting product" });
+    next({ status: 500, message: "Error getting product" });
   }
 };
 
 /**
  * Direct the GET all Products by category ID-request to model
  */
-const getAllProductsByCategory = async (req, res) => {
+const getAllProductsByCategory = async (req, res, next) => {
   try {
     const [products] = await getProductsByCategory(req.params.categoryId);
     if (products) {
       res.status(200).json({ message: "Products found", products });
     } else {
-      res.status(404).json({ message: "Products not found" });
+      next({ status: 404, message: "Products not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting products" });
+    next({ status: 500, message: "Error getting products" });
   }
 };
 
 /**
  * Direct the GET all Products by tag ID-request to model
  */
-const getProductsByTagId = async (req, res) => {
+const getProductsByTagId = async (req, res, next) => {
   try {
     const [products] = await getProductsByTag(req.params.tagId);
     if (products) {
       res.status(200).json({ message: "Products found", products });
     } else {
-      res.status(404).json({ message: "Products not found" });
+      next({ status: 404, message: "Products not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting products" });
+    next({ status: 500, message: "Error getting products" });
   }
 };
 
 /**
  * Direct the POST Product-request to model
  */
-const postProduct = async (req, res) => {
+const postProduct = async (req, res, next) => {
   try {
     const newProduct = req.body;
     const result = await addNewProduct(newProduct);
     if (result.productId) {
       res.status(200).json({ message: "New product added", result });
     } else {
-      res.status(400).json({ message: "Could not add product" });
+      next({ status: 400, message: "Could not add product" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error adding product" });
+    next({ status: 500, message: "Error adding product" });
   }
 };
 
 /**
  * Direct the POST tags/:id-request to model
  */
-const postProductTag = async (req, res) => {
+const postProductTag = async (req, res, next) => {
   try {
     const productId = req.params.productId;
     const tagId = req.body.tag_id;
@@ -101,17 +101,17 @@ const postProductTag = async (req, res) => {
     if (result) {
       res.status(200).json({ message: "New tag added for product", result });
     } else {
-      res.status(400).json({ message: "Could not add tag for product" });
+      next({ status: 400, message: "Could not add tag for product" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error adding tag for product" });
+    next({ status: 500, message: "Error adding tag for product" });
   }
 };
 
 /**
  * Direct the DELETE tags/:id-request to model
  */
-const deleteProductTag = async (req, res) => {
+const deleteProductTag = async (req, res, next) => {
   try {
     const productId = req.params.productId;
     const tagId = req.params.tagId;
@@ -119,17 +119,17 @@ const deleteProductTag = async (req, res) => {
     if (result) {
       res.status(200).json({ message: "Tag removed from a product", result });
     } else {
-      res.status(400).json({ message: "Could not remove a tag from product" });
+      next({ status: 400, message: "Could not remove a tag from product" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error removing tag from a product" });
+    next({ status: 500, message: "Error removing tag from a product" });
   }
 };
 
 /**
  * Direct the PUT Product-request to model
  */
-const putProduct = async (req, res) => {
+const putProduct = async (req, res, next) => {
   try {
     const productId = req.params.id;
     const newProductInfo = req.body;
@@ -137,17 +137,17 @@ const putProduct = async (req, res) => {
     if (result.productId) {
       res.status(200).json({ message: "Product info updated", result });
     } else {
-      res.status(400).json({ message: "Could not update product" });
+      next({ status: 400, message: "Could not update product" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error updating product" });
+    next({ status: 500, message: "Error updating product" });
   }
 };
 
 /**
  * Direct the DELETE Product-request to model
  */
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const productId = req.params.id;
     const result = await removeProduct(productId);
@@ -158,12 +158,10 @@ const deleteProduct = async (req, res) => {
         result,
       });
     } else {
-      res.status(400).json({
-        message: "Could not delete product",
-      });
+      next({ status: 400, message: "Could not delete product" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error deleting product" });
+    next({ status: 500, message: "Error deleting product" });
   }
 };
 

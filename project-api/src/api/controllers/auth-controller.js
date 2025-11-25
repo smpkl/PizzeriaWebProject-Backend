@@ -9,19 +9,19 @@ import "dotenv/config";
 const postAdminLogin = async (req, res, next) => {
   const user = await findUserByEmail(req.body.email);
   if (!user) {
-    res.status(404).json({ message: "User not found" });
+    next({ status: 404, message: "User not found" });
     return;
   }
 
   if (user.role !== "admin") {
-    res.status(403).json({ message: "Forbidden" });
+    next({ status: 403, message: "Forbidden" });
     return;
   }
 
   const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
   if (!passwordMatch) {
-    res.status(401).json({ message: "Unauthorized" });
+    next({ status: 401, message: "Unauthorized" });
     return;
   }
 
@@ -47,14 +47,14 @@ const postUserLogin = async (req, res, next) => {
   const user = await findUserByEmail(req.body.email);
 
   if (!user) {
-    res.status(404).json({ message: "User not found" });
+    next({ status: 404, message: "User not found" });
     return;
   }
 
   const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
   if (!passwordMatch) {
-    res.status(401).json({ message: "Unauthorized" });
+    next({ status: 401, message: "Unauthorized" });
     return;
   }
 
