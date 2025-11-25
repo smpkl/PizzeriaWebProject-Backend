@@ -98,10 +98,9 @@ const modifyMealById = async (id, newInfo) => {
  */
 const removeMeal = async (id) => {
   try {
-    const result = await promisePool.execute(
-      `DELETE FROM meals WHERE id = ?`,
-      [id]
-    );
+    const result = await promisePool.execute(`DELETE FROM meals WHERE id = ?`, [
+      id,
+    ]);
     if (result[0].affectedRows === 0) {
       return false;
     }
@@ -112,4 +111,60 @@ const removeMeal = async (id) => {
   }
 };
 
-export { findAllMeals, findMealById, findMealProducts, modifyMealById, addNewMeal, removeMeal };
+/**
+ * Query for inserting a new meal-product pair into meals_products table aka adds a product to a meal
+ * @param {*} productId the id of the product to which the meal will be attached to
+ *  @param {*} mealId the id of the meal to which the product will be attached to
+ * @returns false if failed to create an new meal-product pair, JSON {product_id: productId, meal_id: mealId} if completed
+ */
+const addMealProduct = async (productId, mealId) => {
+  try {
+    const result = await promisePool.execute(
+      " INSERT INTO meals_products (product_id, meal_id) VALUES (?, ?)",
+      [Number(productId), Number(mealId)]
+    );
+    console.log(result);
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { product_id: Number(productId), meal_id: Number(mealId) };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+/**
+ * Query for removing a meal-product pair from meals_products table aka removes a product from a meal
+ * @param {*} productId the id of the product to which the meal is attached to
+ *  @param {*} mealId the id of the meal to which the product is attached to
+ * @returns false if failed to remove meal-product pair, JSON {product_id: productId, meal_id: mealId} if completed
+ */
+const removeMealProduct = async (productId, tagId) => {
+  try {
+    console.log(productId, tagId);
+    const result = await promisePool.execute(
+      " DELETE FROM meals_products WHERE product_id = ? AND meal_id = ?",
+      [Number(productId), Number(mealId)]
+    );
+    console.log(result);
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { product_id: Number(productId), meal_id: Number(mealId) };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export {
+  findAllMeals,
+  findMealById,
+  findMealProducts,
+  modifyMealById,
+  addNewMeal,
+  removeMeal,
+  removeMealProduct,
+  addMealProduct,
+};

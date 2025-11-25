@@ -2,8 +2,12 @@ import {
   findAllMeals,
   findMealById,
   findMealProducts,
+  addNewMeal,
+  modifyMealById,
   removeMeal,
-} from "./meals-model.js";
+  addMealProduct,
+  removeMealProduct,
+} from "../models/meals-model.js";
 
 // For meals:
 
@@ -44,6 +48,41 @@ const getMealProducts = async (req, res) => {
   }
 };
 
+/**
+ * Direct the POST Meal-request to model
+ */
+const postMeal = async (req, res) => {
+  try {
+    const newMeal = req.body;
+    const result = await addNewMeal(newMeal);
+    if (result.productId) {
+      res.status(200).json({ message: "New meal added", result });
+    } else {
+      res.status(400).json({ message: "Could not add meal" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error adding meal" });
+  }
+};
+
+/**
+ * Direct the PUT ;eal-request to model
+ */
+const putMeal = async (req, res) => {
+  try {
+    const mealId = req.params.id;
+    const newMealInfo = req.body;
+    const result = await modifyMealById(mealId, newMealInfo);
+    if (result.mealId) {
+      res.status(200).json({ message: "Meal info updated", result });
+    } else {
+      res.status(400).json({ message: "Could not update meal" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error updating meal" });
+  }
+};
+
 const deleteMeal = async (req, res) => {
   try {
     const id = req.params.id;
@@ -58,4 +97,52 @@ const deleteMeal = async (req, res) => {
   }
 };
 
-export { getAllMeals, getMealById, getMealProducts, deleteMeal };
+/**
+ * Direct the POST meals/:id/products-request to model (Add a product to meal)
+ */
+const postMealProduct = async (req, res) => {
+  try {
+    const mealId = req.params.mealId;
+    const productId = req.body.product_id;
+
+    const result = await addMealProduct(productId, mealId);
+    if (result) {
+      res.status(200).json({ message: "New product added to a meal", result });
+    } else {
+      res.status(400).json({ message: "Could not add product to a meal" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error adding product to a meal" });
+  }
+};
+
+/**
+ * Direct the DELETE meals/:id/products -request to model (Delete a product from a meal)
+ */
+const deleteMealProduct = async (req, res) => {
+  try {
+    const productId = req.params.productId;
+    const tagId = req.params.mealId;
+    const result = await removeMealProduct(productId, mealId);
+    if (result) {
+      res.status(200).json({ message: "Product removed from a meal", result });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Could not remove a product from a meal" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error removing product from a meal" });
+  }
+};
+
+export {
+  getAllMeals,
+  getMealById,
+  getMealProducts,
+  deleteMeal,
+  postMeal,
+  putMeal,
+  postMealProduct,
+  deleteMealProduct,
+};
