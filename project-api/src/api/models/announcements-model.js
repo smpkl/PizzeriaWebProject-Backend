@@ -76,9 +76,27 @@ const modifyAnnouncementById = async (id, newInfo) => {
   }
 };
 
+/**
+ *
+ * @param {*} id id of Announcement wanted to delete
+ * @returns false if Announcement is not found by its id or deletion fails,
+ * if deletion goes through it returns JSON {announcementId: id}
+ */
+const removeAnnouncement = async (id) => {
+  const result = await promisePool.execute(
+    `DELETE FROM announcements WHERE id = ?`,
+    [id]
+  );
+  if (result[0].affectedRows === 0) {
+    return false;
+  }
+  return { announcementId: id };
+};
+
 export {
   findAllAnnouncements,
   findAnnouncementById,
   modifyAnnouncementById,
   addNewAnnouncement,
+  removeAnnouncement,
 };
