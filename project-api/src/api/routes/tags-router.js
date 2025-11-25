@@ -3,7 +3,7 @@ import express from "express";
 
 import {
   deleteTag,
-  getAllTags,
+  getTags,
   getTagById,
   postTag,
   putTag,
@@ -12,7 +12,7 @@ import {
 const tagsRouter = express.Router();
 
 // Routes related to announcements:
-tagsRouter.route("/").get(getAllTags).post(postTag);
+tagsRouter.route("/").get(getTags).post(postTag);
 tagsRouter.route("/:id").get(getTagById).delete(deleteTag).put(putTag);
 
 export default tagsRouter;

@@ -1,5 +1,5 @@
 import express from "express";
-import adminRouter from "./routes/admin-router.js";
+//import adminRouter from "./routes/admin-router.js";
 import productsRouter from "./routes/products-router.js";
 import mealsRouter from "./routes/meals-router.js";
 import tagsRouter from "./routes/tags-router.js";
@@ -11,7 +11,7 @@ import couponsRouter from "./routes/coupons-router.js";
 
 const router = express.Router();
 
-router.use("/admin", adminRouter);
+//router.use("/admin", adminRouter);
 router.use("/products", productsRouter);
 router.use("/meals", mealsRouter);
 router.use("/tags", tagsRouter);

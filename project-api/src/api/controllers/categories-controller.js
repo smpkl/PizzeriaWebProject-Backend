@@ -4,7 +4,7 @@ import {
   addNewCategory,
   modifyCategoryById,
   removeCategory,
-} from "../models/categories-model";
+} from "../models/categories-model.js";
 
 /**
  * Direct the GET all categories-request to model
