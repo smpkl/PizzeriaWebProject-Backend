@@ -1,5 +1,7 @@
 import express from "express";
 import { authenticateToken } from "../../middlewares/authentication.js";
+import { validationErrors } from "../../middlewares/error-handler.js";
+import { body } from "express-validator";
 
 import {
   getAllAnnouncements,
@@ -11,11 +13,48 @@ import {
 
 const announcRouter = express.Router();
 
+// Kuva varmaan tarkistetaan uploadin yhteydessä? Eli sitä ei huomioida tässä chainissa.
+const announcementValidationChain = () => {
+  return [
+    body("title")
+      .trim()
+      .notEmpty()
+      .withMessage("Title cannot be empty.")
+      .isLength({ min: 2, max: 50 })
+      .withMessage("Title must be between 2 to 50 characters long."),
+    body("text")
+      .trim()
+      .notEmpty()
+      .withMessage("Text cannot be empty.")
+      .bail()
+      .isLength({ min: 2, max: 700 })
+      .withMessage("Title must be between 2 to 700 characters long."),
+  ];
+};
+
 // Routes related to announcements:
-announcRouter.route("/").get(authenticateToken, getAllAnnouncements);
-announcRouter.route("/:id").get(authenticateToken, getAnnouncementById);
-announcRouter.route("/").post(postAnnouncement);
-announcRouter.route("/").put(authenticateToken, putAnnouncement);
+announcRouter.route("/").get(getAllAnnouncements);
+
+announcRouter.route("/:id").get(getAnnouncementById);
+
+announcRouter
+  .route("/")
+  .post(
+    authenticateToken,
+    announcementValidationChain(),
+    validationErrors,
+    postAnnouncement
+  );
+
+announcRouter
+  .route("/")
+  .put(
+    authenticateToken,
+    announcementValidationChain(),
+    validationErrors,
+    putAnnouncement
+  );
+
 announcRouter.route("/").delete(authenticateToken, deleteAnnouncement);
 
 export default announcRouter;
