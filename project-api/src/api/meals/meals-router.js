@@ -1,5 +1,5 @@
 import express from "express";
-// import { authenticateToken } from "../../middlewares/authentication.js";
+import { authenticateToken } from "../../middlewares/authentication.js";
 import {
   deleteMeal,
   getAllMeals,
@@ -11,18 +11,24 @@ import {
   deleteMealProduct,
 } from "../controllers/meals-controller.js";
 
-const mealRouter = express.Router();
+const mealsRouter = express.Router();
 
 // Routes related to meals:
-mealRouter.route("/").get(getAllMeals).post(postMeal);
-mealRouter.route("/:id").get(getMealById).put(putMeal).delete(deleteMeal);
+mealsRouter.route("/").get(getAllMeals).post(authenticateToken, postMeal);
+mealsRouter
+  .route("/:id")
+  .get(getMealById)
+  .put(authenticateToken, putMeal)
+  .delete(authenticateToken, deleteMeal);
 
 // Products in the meal (parameter=meal id)
-mealRouter
+mealsRouter
   .route("/:mealId/products")
   .get(getMealProducts)
-  .post(postMealProduct);
+  .post(authenticateToken, postMealProduct);
 
-mealRouter.route("/:mealId/products/:productId").delete(deleteMealProduct); // Delete product from a meal (parameter1=meal id, parameter2=product id)
+mealsRouter
+  .route("/:mealId/products/:productId")
+  .delete(authenticateToken, deleteMealProduct); // Delete product from a meal (parameter1=meal id, parameter2=product id)
 
-export default mealRouter;
+export default mealsRouter;

@@ -1,5 +1,5 @@
 import express from "express";
-// import { authenticateToken } from "../../middlewares/authentication.js";
+import { authenticateToken } from "../../middlewares/authentication.js";
 
 import {
   getAllAnnouncements,
@@ -12,10 +12,10 @@ import {
 const announcRouter = express.Router();
 
 // Routes related to announcements:
-announcRouter.route("/").get(getAllAnnouncements);
-announcRouter.route("/:id").get(getAnnouncementById);
+announcRouter.route("/").get(authenticateToken, getAllAnnouncements);
+announcRouter.route("/:id").get(authenticateToken, getAnnouncementById);
 announcRouter.route("/").post(postAnnouncement);
-announcRouter.route("/").put(putAnnouncement);
-announcRouter.route("/").delete(deleteAnnouncement);
+announcRouter.route("/").put(authenticateToken, putAnnouncement);
+announcRouter.route("/").delete(authenticateToken, deleteAnnouncement);
 
 export default announcRouter;
