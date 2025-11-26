@@ -1,5 +1,5 @@
 import express from "express";
-// import { authenticateToken } from "../../middlewares/authentication.js";
+import { authenticateToken } from "../../middlewares/authentication.js";
 
 import {
   getAllCoupons,
@@ -12,11 +12,13 @@ import {
 const couponsRouter = express.Router();
 
 // Routes related to announcements:
-couponsRouter.route("/").get(getAllCoupons).post(addCoupon);
+// Täytyykö gorAllCoupons laittaa authenticateToken? Voiko kuka tahansa hakea kaikki kupongit? Väärinkäyttömahdollisuus?
+// Asiakkaan syöttämä kuponki pitää kuitenkin jotenkin tarkastaa, vaikka käyttäjä ei ole kirjautuneena.
+couponsRouter.route("/").get(getAllCoupons).post(authenticateToken, addCoupon);
 couponsRouter
   .route("/:id")
-  .get(getCouponById)
-  .put(updateCoupon)
-  .delete(deleteCoupon);
+  .get(getCouponById) // Tämä myös?
+  .put(authenticateToken, updateCoupon)
+  .delete(authenticateToken, deleteCoupon);
 
 export default couponsRouter;

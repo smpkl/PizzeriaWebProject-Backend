@@ -6,7 +6,7 @@ import {
 
 const authRouter = express.Router();
 
-// Laitoin nämä erikseen sillä ajatuksella, että toisella kirjaudutaan sinne admin sivustolle (tarkistaa käyttäjän roolin) ja toisella perussivustolle.
+// Laitoin nämä erikseen sillä ajatuksella, että toisella kirjaudutaan sinne admin sivustolle (tarkistaa käyttäjän roolin) ja toisella perussivustolle. -Riikka
 authRouter.route("/admin/login").post(postAdminLogin);
 authRouter.route("/user/login").post(postUserLogin);
 

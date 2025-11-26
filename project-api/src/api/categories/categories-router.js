@@ -1,5 +1,5 @@
 import express from "express";
-// import { authenticateToken } from "../../middlewares/authentication.js";
+import { authenticateToken } from "../../middlewares/authentication.js";
 
 import {
   getAllCategories,
@@ -12,11 +12,15 @@ import {
 const categoriesRouter = express.Router();
 
 // Routes related to categories:
-categoriesRouter.route("/").get(getAllCategories).post(postCategory);
+categoriesRouter
+  .route("/")
+  .get(getAllCategories)
+  .post(authenticateToken, postCategory);
+
 categoriesRouter
   .route("/:id")
   .get(getCategoryById)
-  .delete(deleteCategory)
-  .put(putCategory);
+  .delete(authenticateToken, deleteCategory)
+  .put(authenticateToken, putCategory);
 
 export default categoriesRouter;

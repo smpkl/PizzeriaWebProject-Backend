@@ -1,5 +1,5 @@
 import express from "express";
-// import { authenticateToken } from "../../middlewares/authentication.js";
+import { authenticateToken } from "../../middlewares/authentication.js";
 
 import {
   deleteTag,
@@ -12,7 +12,12 @@ import {
 const tagsRouter = express.Router();
 
 // Routes related to announcements:
-tagsRouter.route("/").get(getTags).post(postTag);
-tagsRouter.route("/:id").get(getTagById).delete(deleteTag).put(putTag);
+tagsRouter.route("/").get(getTags).post(authenticateToken, postTag);
+
+tagsRouter
+  .route("/:id")
+  .get(getTagById)
+  .delete(authenticateToken, deleteTag)
+  .put(authenticateToken, putTag);
 
 export default tagsRouter;
