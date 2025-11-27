@@ -53,6 +53,15 @@ const getMealProducts = async (req, res, next) => {
  */
 const postMeal = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const newMeal = req.body;
     const result = await addNewMeal(newMeal);
     if (result.productId) {
@@ -70,6 +79,15 @@ const postMeal = async (req, res, next) => {
  */
 const putMeal = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const mealId = req.params.id;
     const newMealInfo = req.body;
     const result = await modifyMealById(mealId, newMealInfo);
@@ -85,6 +103,15 @@ const putMeal = async (req, res, next) => {
 
 const deleteMeal = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const id = req.params.id;
     const result = await removeMeal(id);
     if (result) {
@@ -102,6 +129,15 @@ const deleteMeal = async (req, res, next) => {
  */
 const postMealProduct = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const mealId = req.params.mealId;
     const productId = req.body.product_id;
 
@@ -121,6 +157,15 @@ const postMealProduct = async (req, res, next) => {
  */
 const deleteMealProduct = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const productId = req.params.productId;
     const tagId = req.params.mealId;
     const result = await removeMealProduct(productId, mealId);

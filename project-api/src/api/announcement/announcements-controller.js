@@ -32,6 +32,15 @@ const getAnnouncementById = async (req, res, next) => {
 
 const postAnnouncement = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const newAnnouncement = req.body;
     const result = await addNewAnnouncement(newAnnouncement);
     if (result.announcementId) {
@@ -46,6 +55,15 @@ const postAnnouncement = async (req, res, next) => {
 
 const putAnnouncement = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const announcementId = req.params.id;
     const newAnnouncementInfo = req.body;
     const result = await modifyAnnouncementById(
@@ -64,6 +82,15 @@ const putAnnouncement = async (req, res, next) => {
 
 const deleteAnnouncement = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const announcementId = req.params.id;
     const result = await removeAnnouncement(announcementId);
     console.log(result);

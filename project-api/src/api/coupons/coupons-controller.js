@@ -30,6 +30,15 @@ const getCouponById = async (req, res, next) => {
 
 const addCoupon = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const newCouponAdded = await addNewCoupon(req.body);
     if (newCouponAdded) {
       res

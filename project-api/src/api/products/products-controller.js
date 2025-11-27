@@ -77,6 +77,15 @@ const getProductsByTagId = async (req, res, next) => {
  */
 const postProduct = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const newProduct = req.body;
     const result = await addNewProduct(newProduct);
     if (result.productId) {
@@ -94,6 +103,15 @@ const postProduct = async (req, res, next) => {
  */
 const postProductTag = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const productId = req.params.productId;
     const tagId = req.body.tag_id;
 
@@ -113,6 +131,15 @@ const postProductTag = async (req, res, next) => {
  */
 const deleteProductTag = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const productId = req.params.productId;
     const tagId = req.params.tagId;
     const result = await removeProductTag(productId, tagId);
@@ -131,6 +158,15 @@ const deleteProductTag = async (req, res, next) => {
  */
 const putProduct = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const productId = req.params.id;
     const newProductInfo = req.body;
     const result = await modifyProductById(productId, newProductInfo);
@@ -149,6 +185,15 @@ const putProduct = async (req, res, next) => {
  */
 const deleteProduct = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const productId = req.params.id;
     const result = await removeProduct(productId);
     console.log(result);

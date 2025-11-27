@@ -39,6 +39,15 @@ const getCategoryById = async (req, res, next) => {
  */
 const postCategory = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const categInfo = req.body;
     const result = await addNewCategory(categInfo);
     if (result) {
@@ -56,6 +65,15 @@ const postCategory = async (req, res, next) => {
  */
 const deleteCategory = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const categId = req.params.id;
     const result = await removeCategory(categId);
     if (result) {
@@ -73,6 +91,15 @@ const deleteCategory = async (req, res, next) => {
  */
 const putCategory = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const categId = req.params.id;
     const categInfo = req.body;
     const result = await modifyCategoryById(categId, categInfo);

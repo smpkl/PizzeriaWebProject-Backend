@@ -31,6 +31,18 @@ const getFeedbackById = async (req, res, next) => {
 
 const getAllUsersFeedbacks = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (
+      currentUser.role !== "admin" &&
+      currentUser.user_id !== Number(req.params.id)
+    ) {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const feedbacks = await findFeedbacksByUserId(req.params.id);
     if (feedbacks) {
       res.status(200).json({ message: "User feedback found", feedbacks });
@@ -57,6 +69,15 @@ const addFeedback = async (req, res, next) => {
 
 const updateFeedback = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const updateComplete = await modifyFeedbackById(req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Update was successfull" });
@@ -70,6 +91,15 @@ const updateFeedback = async (req, res, next) => {
 
 const deleteFeedback = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const id = req.params.id;
     const result = await removeFeedback(id);
     if (result) {

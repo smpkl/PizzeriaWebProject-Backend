@@ -11,6 +11,15 @@ import {
 
 const getAllOrders = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const orders = await findAllOrders();
     res.status(200).json({ message: "Orders found", orders });
   } catch (error) {
@@ -33,6 +42,19 @@ const getOrderById = async (req, res, next) => {
 
 const getAllUsersOrders = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (
+      currentUser.role !== "admin" &&
+      currentUser.user_id !== Number(req.params.id)
+    ) {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
+
     const orders = await findAllOrdersByUserId(req.params.id);
     if (orders) {
       res.status(200).json({ message: "User orders found", orders });
@@ -72,6 +94,15 @@ const updateOrder = async (req, res, next) => {
 
 const deleteOrder = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const id = req.params.id;
     const result = await removeOrder(id);
     if (result) {

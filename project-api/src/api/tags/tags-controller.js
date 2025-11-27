@@ -39,6 +39,15 @@ const getTagById = async (req, res, next) => {
  */
 const postTag = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const tagInfo = req.body;
     const result = await addNewTag(tagInfo);
     if (result) {
@@ -56,6 +65,15 @@ const postTag = async (req, res, next) => {
  */
 const deleteTag = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const tagId = req.params.id;
     const result = await removeTag(tagId);
     if (result) {
@@ -73,6 +91,15 @@ const deleteTag = async (req, res, next) => {
  */
 const putTag = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const tagId = req.params.id;
     const tagInfo = req.body;
     const result = await updateTag(tagId, tagInfo);
