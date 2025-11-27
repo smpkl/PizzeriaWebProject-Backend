@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { findUserByEmail } from "../models/users-model.js";
+import { findUserByEmail } from "../users/users-model.js";
 import "dotenv/config";
 
 /**

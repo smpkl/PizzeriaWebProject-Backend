@@ -19,16 +19,21 @@ const announcementValidationChain = () => {
     body("title")
       .trim()
       .notEmpty()
-      .withMessage("Title cannot be empty.")
+      .withMessage("Announcement title cannot be empty.")
+      .bail()
       .isLength({ min: 2, max: 50 })
-      .withMessage("Title must be between 2 to 50 characters long."),
+      .withMessage(
+        "Announcement title must be between 2 to 50 characters long."
+      ),
     body("text")
       .trim()
       .notEmpty()
-      .withMessage("Text cannot be empty.")
+      .withMessage("Announcement text cannot be empty.")
       .bail()
       .isLength({ min: 2, max: 700 })
-      .withMessage("Title must be between 2 to 700 characters long."),
+      .withMessage(
+        "Announcement text must be between 2 to 700 characters long."
+      ),
   ];
 };
 

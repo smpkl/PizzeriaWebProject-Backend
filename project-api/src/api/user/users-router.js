@@ -40,6 +40,9 @@ const userValidationChain = () => {
       .withMessage("Email must be valid."),
     body("address")
       .trim()
+      .notEmpty()
+      .withMessage("Address cannot be empty.")
+      .bail()
       .isLength({ min: 10, max: 400 })
       .withMessage("Address must be atleast 10 characters long.")
       .bail()
@@ -47,6 +50,9 @@ const userValidationChain = () => {
       .withMessage("Address cannot contain special characters (!, ?, # etc.)."),
     body("password")
       .trim()
+      .notEmpty()
+      .withMessage("Password cannot be empty.")
+      .bail()
       .isLength({ min: 8 })
       .withMessage("Password must be atleast 8 characters long."),
   ];

@@ -7,7 +7,7 @@ import {
   removeMeal,
   addMealProduct,
   removeMealProduct,
-} from "../models/meals-model.js";
+} from "./meals-model.js";
 
 // For meals:
 

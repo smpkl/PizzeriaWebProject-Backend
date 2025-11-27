@@ -1,5 +1,7 @@
 import express from "express";
 import { authenticateToken } from "../../middlewares/authentication.js";
+import { body } from "express-validator";
+import { validationErrors } from "../../middlewares/error-handler.js";
 import {
   deleteMeal,
   getAllMeals,
@@ -9,16 +11,38 @@ import {
   getMealProducts,
   postMealProduct,
   deleteMealProduct,
-} from "../controllers/meals-controller.js";
+} from "./meals-controller.js";
 
 const mealsRouter = express.Router();
 
+const mealValidationChain = () => {
+  return [
+    body("name")
+      .trim()
+      .notEmpty()
+      .withMessage("Meal name cannot be empty.")
+      .bail()
+      .isLength()
+      .withMessage("Meal name must be between 2 to 50 characters long."),
+    body("price")
+      .trim()
+      .notEmpty()
+      .withMessage("Meal price cannot be empty")
+      .bail()
+      .isFloat()
+      .withMessage("Meal price must be valid (decimal) number."),
+  ];
+};
+
 // Routes related to meals:
-mealsRouter.route("/").get(getAllMeals).post(authenticateToken, postMeal);
+mealsRouter
+  .route("/")
+  .get(getAllMeals)
+  .post(authenticateToken, mealValidationChain(), validationErrors, postMeal);
 mealsRouter
   .route("/:id")
   .get(getMealById)
-  .put(authenticateToken, putMeal)
+  .put(authenticateToken, mealValidationChain(), validationErrors, putMeal)
   .delete(authenticateToken, deleteMeal);
 
 // Products in the meal (parameter=meal id)

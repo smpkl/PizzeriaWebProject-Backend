@@ -9,9 +9,9 @@ import {
 const getAllCoupons = async (req, res, next) => {
   try {
     const coupons = await findAllCoupons();
-    res.status(200).json({ message: "Orders found", coupons });
+    res.status(200).json({ message: "Coupons found", coupons });
   } catch (error) {
-    next({ status: 500, message: "Error getting orders" });
+    next({ status: 500, message: "Error getting coupons" });
   }
 };
 
@@ -19,12 +19,12 @@ const getCouponById = async (req, res, next) => {
   try {
     const coupon = await findCouponById(req.params.id);
     if (coupon) {
-      res.status(200).json({ message: "Order found", coupon });
+      res.status(200).json({ message: "Coupon found", coupon });
     } else {
-      next({ status: 404, message: "Order not found" });
+      next({ status: 404, message: "Coupon not found" });
     }
   } catch (error) {
-    next({ status: 500, message: "Error getting order" });
+    next({ status: 500, message: "Error getting coupon" });
   }
 };
 
@@ -32,13 +32,15 @@ const addCoupon = async (req, res, next) => {
   try {
     const newCouponAdded = await addNewCoupon(req.body);
     if (newCouponAdded) {
-      res.status(201).json({ message: "New order added successfully" });
+      res
+        .status(201)
+        .json({ message: "New coupon added successfully", newCouponAdded });
     } else {
       res.status(400).json({ message: "Check your request" });
       next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
-    next({ status: 500, message: "Error adding new order" });
+    next({ status: 500, message: "Error adding new coupon" });
   }
 };
 
@@ -46,12 +48,12 @@ const updateCoupon = async (req, res, next) => {
   try {
     const updateComplete = await modifyCouponById(req.body);
     if (updateComplete) {
-      res.status(200).json({ message: "Update was successfull" });
+      res.status(200).json({ message: "Coupon update was successfull" });
     } else {
       next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
-    next({ status: 500, message: "Error updating a order" });
+    next({ status: 500, message: "Error updating a coupon" });
   }
 };
 
