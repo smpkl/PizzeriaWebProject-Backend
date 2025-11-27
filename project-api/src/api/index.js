@@ -1,4 +1,5 @@
 import express from "express";
+import authRouter from "./auth/auth-router.js";
 import usersRouter from "./user/users-router.js";
 import productsRouter from "./products/products-router.js";
 import mealsRouter from "./meals/meals-router.js";
@@ -11,6 +12,7 @@ import couponsRouter from "./coupons/coupons-router.js";
 
 const router = express.Router();
 
+router.use("/auth", authRouter);
 router.use("/users", usersRouter);
 router.use("/products", productsRouter);
 router.use("/meals", mealsRouter);

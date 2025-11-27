@@ -22,7 +22,8 @@ const productValidationChain = () => {
   return [
     body("name")
       .trim()
-      .notEmpty("Product must have a name.")
+      .notEmpty()
+      .withMessage("Product must have a name.")
       .bail()
       .isLength({ min: 3, max: 50 })
       .withMessage("Product name must be between 3 to 50 characters long."),

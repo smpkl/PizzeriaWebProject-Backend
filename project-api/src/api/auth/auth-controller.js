@@ -1,13 +1,15 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { findUserByEmail } from "../users/users-model.js";
+import { findOneUserByEmail } from "../user/users-model.js";
 import "dotenv/config";
 
 /**
  * For logging in to the admin site: Find user by email via user model, check if they are an admin and check password match:
  */
 const postAdminLogin = async (req, res, next) => {
-  const user = await findUserByEmail(req.body.email);
+  console.log("Admin login...");
+  const user = await findOneUserByEmail(req.body.email);
+  console.log(user);
   if (!user) {
     next({ status: 404, message: "User not found" });
     return;
@@ -44,7 +46,7 @@ const postAdminLogin = async (req, res, next) => {
  * For logging in to the regular site: Find user by email via user model and check password match:
  */
 const postUserLogin = async (req, res, next) => {
-  const user = await findUserByEmail(req.body.email);
+  const user = await findOneUserByEmail(req.body.email);
 
   if (!user) {
     next({ status: 404, message: "User not found" });

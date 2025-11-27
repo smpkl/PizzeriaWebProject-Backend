@@ -21,7 +21,7 @@ const findOneUserById = async (id) => {
   if (user.length === 0) {
     return false;
   }
-  return order[0];
+  return user[0];
 };
 
 /**
@@ -37,12 +37,12 @@ const findOneUserByEmail = async (email) => {
   if (user.length === 0) {
     return false;
   }
-  return order[0];
+  return user[0];
 };
 
 /**
  * Query for adding new user to the database
- * @param {*} user is order JSON with all necessary informatiom
+ * @param {*} user is JSON with all necessary informatiom
  * @returns false if it was failed to add, JSON { user_id: rows[0].insertId }
  * if added to the database
  */

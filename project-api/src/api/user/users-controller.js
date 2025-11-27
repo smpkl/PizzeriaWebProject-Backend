@@ -5,7 +5,7 @@ import {
   findAllUsers,
   removeUser,
   modifyUserById,
-} from "./users-model";
+} from "./users-model.js";
 import bcrypt from "bcrypt";
 
 /**
