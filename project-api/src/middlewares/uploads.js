@@ -43,4 +43,20 @@ const createCardIMG = async (req, res, next) => {
   next();
 };
 
-export { upload, createCardIMG };
+const createOriginal = async (req, res, next) => {
+  if (!req.file) {
+    console.log("No file");
+    return next();
+  }
+  console.log(req.file.path);
+  const originalPath = req.file.path;
+  const fullPicPath = originalPath + "_full.webp";
+
+  await sharp(originalPath).toFormat("webp").toFile(fullPicPath);
+
+  req.body.filename = path.basename(fullPicPath);
+
+  next();
+};
+
+export { upload, createCardIMG, createOriginal };

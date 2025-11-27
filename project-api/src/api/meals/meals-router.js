@@ -2,6 +2,8 @@ import express from "express";
 import { authenticateToken } from "../../middlewares/authentication.js";
 import { body } from "express-validator";
 import { validationErrors } from "../../middlewares/error-handler.js";
+import { upload, createCardIMG } from "../../middlewares/uploads.js";
+
 import {
   deleteMeal,
   getAllMeals,
@@ -38,11 +40,25 @@ const mealValidationChain = () => {
 mealsRouter
   .route("/")
   .get(getAllMeals)
-  .post(authenticateToken, mealValidationChain(), validationErrors, postMeal);
+  .post(
+    authenticateToken,
+    upload.single("file"),
+    createCardIMG,
+    mealValidationChain(),
+    validationErrors,
+    postMeal
+  );
 mealsRouter
   .route("/:id")
   .get(getMealById)
-  .put(authenticateToken, mealValidationChain(), validationErrors, putMeal)
+  .put(
+    authenticateToken,
+    upload.single("file"),
+    createCardIMG,
+    mealValidationChain(),
+    validationErrors,
+    putMeal
+  )
   .delete(authenticateToken, deleteMeal);
 
 // Products in the meal (parameter=meal id)

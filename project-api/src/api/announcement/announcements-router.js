@@ -2,6 +2,7 @@ import express from "express";
 import { authenticateToken } from "../../middlewares/authentication.js";
 import { validationErrors } from "../../middlewares/error-handler.js";
 import { body } from "express-validator";
+import { upload, createOriginal } from "../../middlewares/uploads.js";
 
 import {
   getAllAnnouncements,
@@ -46,6 +47,8 @@ announcRouter
   .route("/")
   .post(
     authenticateToken,
+    upload.single("file"),
+    createOriginal,
     announcementValidationChain(),
     validationErrors,
     postAnnouncement
@@ -55,6 +58,8 @@ announcRouter
   .route("/")
   .put(
     authenticateToken,
+    upload.single("file"),
+    createOriginal,
     announcementValidationChain(),
     validationErrors,
     putAnnouncement

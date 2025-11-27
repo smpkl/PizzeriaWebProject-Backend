@@ -53,6 +53,7 @@ const postAnnouncement = async (req, res, next) => {
       next({ status: 400, message: "Could not add announcement" });
     }
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error adding announcement" });
   }
 };
