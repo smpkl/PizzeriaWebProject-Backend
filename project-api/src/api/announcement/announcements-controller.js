@@ -40,6 +40,11 @@ const postAnnouncement = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
+
+    if (!req.body.filename && req.file) {
+      req.body.filename = req.file.filename;
+    }
+
     const newAnnouncement = req.body;
     const result = await addNewAnnouncement(newAnnouncement);
     if (result.announcementId) {
@@ -63,6 +68,11 @@ const putAnnouncement = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
+
+    if (!req.body.filename && req.file) {
+      req.body.filename = req.file.filename;
+    }
+
     const announcementId = req.params.id;
     const newAnnouncementInfo = req.body;
     const result = await modifyAnnouncementById(

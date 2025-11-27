@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `announcements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `text` varchar(700) NOT NULL,
-  `image` varchar(300) DEFAULT NULL,
+  `filename` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `meals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `price` double NOT NULL,
+  `filename` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
@@ -92,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` double NOT NULL,
   `category` int(11) DEFAULT NULL,
   `description` varchar(700) DEFAULT NULL,
+  `filename` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_products_categories` (`category`),
   CONSTRAINT `FK_products_categories` FOREIGN KEY (`category`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

@@ -46,10 +46,10 @@ const findMealProducts = async (id) => {
  * if added to the database
  */
 const addNewMeal = async (meal) => {
-  const { name, price } = meal;
-  const sql = `INSERT INTO ${tableName} (name, price) 
-               Values (?, ?)`;
-  const params = [name, price];
+  const { name, price, filename } = meal;
+  const sql = `INSERT INTO ${tableName} (name, price, filename) 
+               Values (?, ?, ?)`;
+  const params = [name, price, filename ?? null];
   const result = await promisePool.execute(sql, params);
   if (result[0].affectedRows === 0) {
     return false;

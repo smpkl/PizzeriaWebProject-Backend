@@ -62,6 +62,11 @@ const postMeal = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
+
+    if (!req.body.filename && req.file) {
+      req.body.filename = req.file.filename;
+    }
+
     const newMeal = req.body;
     const result = await addNewMeal(newMeal);
     if (result.productId) {
@@ -88,6 +93,11 @@ const putMeal = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
+
+    if (!req.body.filename && req.file) {
+      req.body.filename = req.file.filename;
+    }
+
     const mealId = req.params.id;
     const newMealInfo = req.body;
     const result = await modifyMealById(mealId, newMealInfo);

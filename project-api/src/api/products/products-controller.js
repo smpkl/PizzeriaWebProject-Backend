@@ -86,6 +86,11 @@ const postProduct = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
+
+    if (!req.body.filename && req.file) {
+      req.body.filename = req.file.filename;
+    }
+
     const newProduct = req.body;
     const result = await addNewProduct(newProduct);
     if (result.productId) {
@@ -167,6 +172,11 @@ const putProduct = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
+
+    if (!req.body.filename && req.file) {
+      req.body.filename = req.file.filename;
+    }
+
     const productId = req.params.id;
     const newProductInfo = req.body;
     const result = await modifyProductById(productId, newProductInfo);

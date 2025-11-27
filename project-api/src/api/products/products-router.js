@@ -2,6 +2,7 @@ import express from "express";
 import { authenticateToken } from "../../middlewares/authentication.js";
 import { body } from "express-validator";
 import { validationErrors } from "../../middlewares/error-handler.js";
+import { upload, createCardIMG } from "../../middlewares/uploads.js";
 
 import {
   getAllProducts,
@@ -55,6 +56,8 @@ productsRouter
   .get(getAllProducts)
   .post(
     authenticateToken,
+    upload.single("file"),
+    createCardIMG,
     productValidationChain(),
     validationErrors,
     postProduct

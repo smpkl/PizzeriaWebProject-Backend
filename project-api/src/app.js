@@ -12,6 +12,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1", router);
+app.use("/api/v1/uploads", express.static("uploads"));
 
 app.use(errorHandler);
 

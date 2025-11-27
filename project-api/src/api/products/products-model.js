@@ -66,10 +66,17 @@ const getProductsByTag = async (tagId) => {
  * @returns false if failed to create, JSON {productId: id} if completed
  */
 const addNewProduct = async (product) => {
-  const { name, ingredients, price, category, description } = product;
-  const sql = `INSERT INTO products (name, ingredients, price, category, description) 
-        VALUES (?, ?, ?, ?, ?)`;
-  const params = [name, ingredients, price, category, description];
+  const { name, ingredients, price, category, description, filename } = product;
+  const sql = `INSERT INTO products (name, ingredients, price, category, description, filename) 
+        VALUES (?, ?, ?, ?, ?, ?)`;
+  const params = [
+    name,
+    ingredients,
+    price,
+    category,
+    description,
+    filename ?? null,
+  ];
   const result = await promisePool.execute(sql, params);
   if (result[0].affectedRows === 0) {
     return false;
@@ -136,17 +143,19 @@ const removeProductTag = async (productId, tagId) => {
 const modifyProductById = async (id, newInfo) => {
   const product = await findOneProductById(id);
   if (product) {
-    const { name, ingredients, price, category, description } = product;
+    const { name, ingredients, price, category, description, filename } =
+      product;
     const updateJSON = {
       name: newInfo.name ?? name,
       ingredients: newInfo.ingredients ?? ingredients,
       price: newInfo.price ?? price,
       category: newInfo.category ?? category,
       description: newInfo.description ?? description,
+      filename: newInfo.filename ?? filename,
     };
     const sql = `
     UPDATE products
-    SET name = ?, ingredients = ?, price = ?, category = ?, description = ?
+    SET name = ?, ingredients = ?, price = ?, category = ?, description = ?, filename = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
       updateJSON.name,
@@ -154,6 +163,7 @@ const modifyProductById = async (id, newInfo) => {
       updateJSON.price,
       updateJSON.category,
       updateJSON.description,
+      updateJSON.filename,
       id,
     ]);
     if (result[0].affectedRows === 0) {

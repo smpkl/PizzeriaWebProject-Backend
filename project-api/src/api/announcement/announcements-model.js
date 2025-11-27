@@ -29,10 +29,10 @@ const findAnnouncementById = async (id) => {
  * if added to the database
  */
 const addNewAnnouncement = async (announcement) => {
-  const { title, text, image } = announcement;
-  const sql = `INSERT INTO announcements (title, text, image) 
+  const { title, text, filename } = announcement;
+  const sql = `INSERT INTO announcements (title, text, filename) 
                VALUES (?, ?, ?)`;
-  const params = [title, text, image ?? ""];
+  const params = [title, text, filename ?? null];
   const result = await promisePool.execute(sql, params);
   if (result[0].affectedRows === 0) {
     return false;
@@ -51,11 +51,11 @@ const addNewAnnouncement = async (announcement) => {
 const modifyAnnouncementById = async (id, newInfo) => {
   const announcement = await findAnnouncementById(id);
   if (announcement) {
-    const { title, text, image } = announcement[0];
+    const { title, text, filename } = announcement[0];
     const updateJSON = {
       title: newInfo.title ?? title,
       text: newInfo.text ?? text,
-      image: newInfo.image ?? image,
+      filename: newInfo.filename ?? filename,
     };
     const sql = `
     UPDATE announcements
@@ -64,7 +64,7 @@ const modifyAnnouncementById = async (id, newInfo) => {
     const result = await promisePool.execute(sql, [
       updateJSON.title,
       updateJSON.text,
-      updateJSON.image,
+      updateJSON.filename,
       id,
     ]);
     if (result[0].affectedRows === 0) {
