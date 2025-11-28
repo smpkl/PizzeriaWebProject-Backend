@@ -139,6 +139,69 @@ const removeOrder = async (id) => {
   }
 };
 
+/**
+ * Query for order products by order id
+ * @param {*} id order unique id
+ * @returns false if no product found, list of products if found
+ */
+const findOrderProducts = async (id) => {
+  const [rows] = await promisePool.execute(
+    "SELECT products.* FROM order_products LEFT JOIN products ON product_id = products.id WHERE order_id = ?",
+    [id]
+  );
+  console.log("rows", rows);
+  if (rows.length === 0) {
+    return false;
+  }
+  return rows;
+};
+
+/**
+ * Query for inserting a new order-product pair into order_products table aka adds a product to an order
+ * @param {*} productId the id of the product to which the order will be attached to
+ *  @param {*} orderId the id of the order to which the product will be attached to
+ * @returns false if failed to create an new order-product pair, JSON {product_id: productId, order_id: orderId} if completed
+ */
+const addOrderProduct = async (productId, orderId) => {
+  try {
+    const result = await promisePool.execute(
+      " INSERT INTO order_products (product_id, order_id) VALUES (?, ?)",
+      [Number(productId), Number(orderId)]
+    );
+    console.log(result);
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { product_id: Number(productId), order_id: Number(orderId) };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+/**
+ * Query for removing an order-product pair from order_products table aka removes a product from an order
+ * @param {*} productId the id of the product to which the order is attached to
+ *  @param {*} orderId the id of the order to which the product is attached to
+ * @returns false if failed to remove order-product pair, JSON {product_id: productId, order_id: orderId} if completed
+ */
+const removeOrderProduct = async (productId, orderId) => {
+  try {
+    const result = await promisePool.execute(
+      " DELETE FROM order_products WHERE product_id = ? AND order_id = ?",
+      [Number(productId), Number(orderId)]
+    );
+    console.log(result);
+    if (result[0].affectedRows === 0) {
+      return false;
+    }
+    return { product_id: Number(productId), order_id: Number(orderId) };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export {
   findAllOrders,
   findOneOrderById,
@@ -146,4 +209,7 @@ export {
   addNewOrder,
   modifyOrderById,
   removeOrder,
+  addOrderProduct,
+  removeOrderProduct,
+  findOrderProducts,
 };

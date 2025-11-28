@@ -123,7 +123,7 @@ const addMealProduct = async (productId, mealId) => {
       " INSERT INTO meals_products (product_id, meal_id) VALUES (?, ?)",
       [Number(productId), Number(mealId)]
     );
-    console.log(result);
+    //console.log(result);
     if (result[0].affectedRows === 0) {
       return false;
     }
@@ -140,14 +140,14 @@ const addMealProduct = async (productId, mealId) => {
  *  @param {*} mealId the id of the meal to which the product is attached to
  * @returns false if failed to remove meal-product pair, JSON {product_id: productId, meal_id: mealId} if completed
  */
-const removeMealProduct = async (productId, tagId) => {
+const removeMealProduct = async (productId, mealId) => {
   try {
-    console.log(productId, tagId);
+    //console.log(productId, mealId);
     const result = await promisePool.execute(
       " DELETE FROM meals_products WHERE product_id = ? AND meal_id = ?",
       [Number(productId), Number(mealId)]
     );
-    console.log(result);
+    //console.log(result);
     if (result[0].affectedRows === 0) {
       return false;
     }

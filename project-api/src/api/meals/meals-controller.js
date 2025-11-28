@@ -177,7 +177,7 @@ const deleteMealProduct = async (req, res, next) => {
       return;
     }
     const productId = req.params.productId;
-    const tagId = req.params.mealId;
+    const mealId = req.params.mealId;
     const result = await removeMealProduct(productId, mealId);
     if (result) {
       res.status(200).json({ message: "Product removed from a meal", result });

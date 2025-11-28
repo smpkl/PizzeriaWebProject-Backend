@@ -10,6 +10,9 @@ import {
   addOrder,
   updateOrder,
   deleteOrder,
+  postOrderProduct,
+  deleteOrderProduct,
+  getOrderProducts,
 } from "./orders-controller.js";
 
 const orderRouter = express.Router();
@@ -81,6 +84,16 @@ orderRouter
   .get(getOrderById)
   .put(orderValidationChain(), validationErrors, updateOrder)
   .delete(authenticateToken, deleteOrder);
+
+// Products in the order (parameter=order id)
+orderRouter
+  .route("/:orderId/products")
+  .get(getOrderProducts)
+  .post(authenticateToken, postOrderProduct);
+
+orderRouter
+  .route("/:orderId/products/:productId")
+  .delete(authenticateToken, deleteOrderProduct); // Delete product from an order (parameter1= order id, parameter2=product id)
 
 orderRouter.route("/user/:id").get(authenticateToken, getAllUsersOrders); // Get order by user id
 
