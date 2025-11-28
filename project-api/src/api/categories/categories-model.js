@@ -53,7 +53,7 @@ const addNewCategory = async (category) => {
 const modifyCategoryById = async (id, newInfo) => {
   const category = await findCategoryById(id);
   if (category) {
-    const { name } = category[0];
+    const { name } = category;
     const updateJSON = {
       name: newInfo.name ?? name,
     };
