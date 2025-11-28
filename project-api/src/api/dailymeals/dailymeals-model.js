@@ -18,7 +18,7 @@ const findAllDailymeals = async () => {
  */
 const findDailymealByDay = async (day) => {
   const [dailymeal] = await promisePool.query(
-    `SELECT meals.id as meal_id, meals.name as meal_name, meals.price as meal_price, meals.filename as meal_filename FROM meals INNER JOIN daily_meals ON meals.id = daily_meals.meal_id WHERE daily_meals.day = ?`,
+    `SELECT meals.* FROM meals INNER JOIN daily_meals ON meals.id = daily_meals.meal_id WHERE daily_meals.day = ?`,
     [day]
   );
   if (dailymeal.length === 0) {

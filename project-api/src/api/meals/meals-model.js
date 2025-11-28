@@ -4,7 +4,8 @@ import promisePool from "../../utils/database.js";
  * @returns all meals as a list
  */
 const findAllMeals = async () => {
-  return await promisePool.query("SELECT * FROM meals");
+  const [meals] = await promisePool.query("SELECT * FROM meals");
+  return meals;
 };
 
 /**
@@ -13,7 +14,7 @@ const findAllMeals = async () => {
  * @returns false if no meal found, meal if found
  */
 const findMealById = async (id) => {
-  const [meal] = await promisePool.query(`SELECT * FROM meals WHERE ID = ?)`, [
+  const [meal] = await promisePool.query(`SELECT * FROM meals WHERE ID = ?`, [
     id,
   ]);
   if (meal.length === 0) {

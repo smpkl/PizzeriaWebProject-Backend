@@ -4,7 +4,10 @@ import promisePool from "../../utils/database.js";
  * @returns all announcements as a list
  */
 const findAllAnnouncements = async () => {
-  return await promisePool.query("SELECT * FROM announcements");
+  const [announcements] = await promisePool.query(
+    "SELECT * FROM announcements"
+  );
+  return announcements;
 };
 
 /**
@@ -90,7 +93,7 @@ const removeAnnouncement = async (id) => {
   if (result[0].affectedRows === 0) {
     return false;
   }
-  return { announcementId: Number(id)};
+  return { announcementId: Number(id) };
 };
 
 export {

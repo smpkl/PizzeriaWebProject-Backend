@@ -5,7 +5,8 @@ import promisePool from "../../utils/database.js";
  * @returns all categories as a list
  */
 const findAllCategories = async () => {
-  return await promisePool.query(`SELECT * FROM categories`);
+  const [categories] = await promisePool.query(`SELECT * FROM categories`);
+  return categories;
 };
 
 /**

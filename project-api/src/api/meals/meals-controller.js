@@ -23,13 +23,14 @@ const getAllMeals = async (req, res, next) => {
 const getMealById = async (req, res, next) => {
   try {
     const meal = await findMealById(req.params.id);
-    console.log(meal);
+    //console.log(meal);
     if (meal) {
       res.status(200).json({ message: "Meal found", meal });
     } else {
       next({ status: 404, message: "Meal not found" });
     }
   } catch (error) {
+    //console.log(error);
     next({ status: 500, message: "Error getting meal" });
   }
 };

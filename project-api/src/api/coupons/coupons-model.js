@@ -5,7 +5,8 @@ import promisePool from "../../utils/database.js";
  */
 
 const findAllCoupons = async () => {
-  return await promisePool.query("SELECT * FROM coupons");
+  const [coupons] = await promisePool.query("SELECT * FROM coupons");
+  return coupons;
 };
 
 /**
@@ -108,4 +109,10 @@ const removeCoupon = async (id) => {
   }
 };
 
-export { findAllCoupons, findCouponById, modifyCouponById, addNewCoupon, removeCoupon };
+export {
+  findAllCoupons,
+  findCouponById,
+  modifyCouponById,
+  addNewCoupon,
+  removeCoupon,
+};

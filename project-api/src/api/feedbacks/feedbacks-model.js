@@ -5,7 +5,8 @@ import promisePool from "../../utils/database.js";
  * @returns all feedbacks as a list
  */
 const findAllFeedbacks = async () => {
-  return await promisePool.query(`SELECT * FROM feedbacks`);
+  const [feedbacks] = await promisePool.query(`SELECT * FROM feedbacks`);
+  return feedbacks;
 };
 
 /**
@@ -39,7 +40,6 @@ const findFeedbacksByUserId = async (userId) => {
   }
   return feedbacks;
 };
-
 
 /**
  * Query for adding new feedback to the database
@@ -131,5 +131,5 @@ export {
   findFeedbacksByUserId,
   addNewFeedback,
   modifyFeedbackById,
-  removeFeedback
+  removeFeedback,
 };
