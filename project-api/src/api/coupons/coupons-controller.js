@@ -55,7 +55,7 @@ const addCoupon = async (req, res, next) => {
 
 const updateCoupon = async (req, res, next) => {
   try {
-    const updateComplete = await modifyCouponById(req.body);
+    const updateComplete = await modifyCouponById(req.params.id, req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Coupon update was successfull" });
     } else {
