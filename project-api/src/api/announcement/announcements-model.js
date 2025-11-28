@@ -59,7 +59,7 @@ const modifyAnnouncementById = async (id, newInfo) => {
     };
     const sql = `
     UPDATE announcements
-    SET title = ?, text = ?, image = ?
+    SET title = ?, text = ?, filename = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
       updateJSON.title,
@@ -70,7 +70,7 @@ const modifyAnnouncementById = async (id, newInfo) => {
     if (result[0].affectedRows === 0) {
       return false;
     }
-    return { announcementId: id };
+    return { announcementId: Number(id) };
   } else {
     return false;
   }
@@ -90,7 +90,7 @@ const removeAnnouncement = async (id) => {
   if (result[0].affectedRows === 0) {
     return false;
   }
-  return { announcementId: id };
+  return { announcementId: Number(id)};
 };
 
 export {

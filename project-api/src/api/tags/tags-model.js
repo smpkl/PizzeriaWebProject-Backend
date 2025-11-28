@@ -4,7 +4,8 @@ import promisePool from "../../utils/database.js";
  * @returns all tags as a list
  */
 const getAllTags = async () => {
-  return await promisePool.query("SELECT * FROM tags");
+  const [tags] = await promisePool.query("SELECT * FROM tags");
+  return tags;
 };
 
 /**

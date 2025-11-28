@@ -74,6 +74,6 @@ usersRouter
   .delete(authenticateToken, deleteUser)
   .put(authenticateToken, userValidationChain(), validationErrors, putUser);
 
-usersRouter.route("email/:email").get(getUserByEmail);
+usersRouter.route("/email/:email").get(getUserByEmail);
 
 export default usersRouter;

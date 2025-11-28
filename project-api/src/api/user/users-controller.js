@@ -86,7 +86,7 @@ const getUserById = async (req, res, next) => {
  */
 const getUserByEmail = async (req, res, next) => {
   try {
-    const user = await findOneUserByEmail(req.params.id);
+    const user = await findOneUserByEmail(req.params.email);
     if (user) {
       res.status(200).json({ message: "User found", user });
     } else {

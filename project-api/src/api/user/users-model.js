@@ -88,7 +88,6 @@ const modifyUserById = async (id, newInfo) => {
       updateJSON.email,
       updateJSON.password,
       updateJSON.address,
-      updateJSON.price,
       id,
     ]);
     if (result[0].affectedRows === 0) {

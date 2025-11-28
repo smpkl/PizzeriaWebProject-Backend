@@ -15,7 +15,7 @@ const findAllCoupons = async () => {
  */
 const findCouponById = async (id) => {
   const [coupon] = await promisePool.query(
-    `SELECT * FROM coupons WHERE ID = ?)`,
+    `SELECT * FROM coupons WHERE ID = ?`,
     [id]
   );
   if (coupon.length === 0) {
@@ -81,7 +81,7 @@ const modifyCouponById = async (id, newInfo) => {
     if (result[0].affectedRows === 0) {
       return false;
     }
-    return { couponId: id };
+    return { couponId: Number(id) };
   } else {
     return false;
   }
@@ -101,7 +101,7 @@ const removeCoupon = async (id) => {
     if (result[0].affectedRows === 0) {
       return false;
     }
-    return { coupon_Id: id };
+    return { coupon_Id: Number(id) };
   } catch (error) {
     console.log(error);
     return false;
