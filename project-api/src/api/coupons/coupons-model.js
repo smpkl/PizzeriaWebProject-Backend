@@ -15,7 +15,7 @@ const findAllCoupons = async () => {
  */
 const findCouponById = async (id) => {
   const [coupon] = await promisePool.query(
-    `SELECT * FROM coupons WHERE ID = ?)`,
+    `SELECT * FROM coupons WHERE ID = ?`,
     [id]
   );
   if (coupon.length === 0) {
