@@ -81,7 +81,7 @@ const addOrder = async (req, res, next) => {
 
 const updateOrder = async (req, res, next) => {
   try {
-    const updateComplete = await modifyOrderById(req.body);
+    const updateComplete = await modifyOrderById(req.params.id, req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Update was successfull" });
     } else {
