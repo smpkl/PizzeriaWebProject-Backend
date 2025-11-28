@@ -65,7 +65,7 @@ const modifyCategoryById = async (id, newInfo) => {
     if (result[0].affectedRows === 0) {
       return false;
     }
-    return { categoryId: id };
+    return { categoryId: Number(id) };
   } else {
     return false;
   }

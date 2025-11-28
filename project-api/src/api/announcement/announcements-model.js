@@ -70,7 +70,7 @@ const modifyAnnouncementById = async (id, newInfo) => {
     if (result[0].affectedRows === 0) {
       return false;
     }
-    return { announcementId: id };
+    return { announcementId: Number(id) };
   } else {
     return false;
   }
@@ -90,7 +90,7 @@ const removeAnnouncement = async (id) => {
   if (result[0].affectedRows === 0) {
     return false;
   }
-  return { announcementId: id };
+  return { announcementId: Number(id)};
 };
 
 export {
