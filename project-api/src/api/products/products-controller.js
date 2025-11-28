@@ -30,7 +30,8 @@ const getAllProducts = async (req, res, next) => {
  */
 const getProductById = async (req, res, next) => {
   try {
-    const [product] = await findOneProductById(req.params.id);
+    console.log("getProductById");
+    const product = await findOneProductById(req.params.id);
     if (product) {
       res.status(200).json({ message: "Product found", product });
     } else {
