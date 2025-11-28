@@ -14,7 +14,7 @@ const findAllAnnouncements = async () => {
  */
 const findAnnouncementById = async (id) => {
   const [announcement] = await promisePool.query(
-    `SELECT * FROM announcements WHERE ID = ?)`,
+    `SELECT * FROM announcements WHERE ID = ?`,
     [id]
   );
   if (announcement.length === 0) {

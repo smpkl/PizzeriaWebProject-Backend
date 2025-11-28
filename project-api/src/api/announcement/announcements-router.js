@@ -55,7 +55,7 @@ announcRouter
   );
 
 announcRouter
-  .route("/")
+  .route("/:id")
   .put(
     authenticateToken,
     upload.single("file"),
@@ -65,6 +65,6 @@ announcRouter
     putAnnouncement
   );
 
-announcRouter.route("/").delete(authenticateToken, deleteAnnouncement);
+announcRouter.route("/:id").delete(authenticateToken, deleteAnnouncement);
 
 export default announcRouter;
