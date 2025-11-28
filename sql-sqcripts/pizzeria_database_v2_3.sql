@@ -99,6 +99,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_products_categories` FOREIGN KEY (`category`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
+-- Dumping structure for taulu pizzeria_database.daily_meals
+DROP TABLE IF EXISTS `daily_meals`;
+CREATE TABLE IF NOT EXISTS `daily_meals` (
+  `day` varchar(50) NOT NULL,
+  `meal_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`day`),
+  KEY `FK_day_meal_id` (`meal_id`),
+  CONSTRAINT `FK_day_meal_id` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
 -- Dumping structure for taulu pizzeria_database.tags
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
@@ -144,3 +154,6 @@ CREATE TABLE IF NOT EXISTS `products_tags` (
   CONSTRAINT `FK_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_tags_id` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+-- Insert default days into daily_meals table
+INSERT INTO daily_meals (day) VALUES ("monday"),("tuesday"),("wednesday"),("thursday"),("friday"),("saturday"),("sunday");
