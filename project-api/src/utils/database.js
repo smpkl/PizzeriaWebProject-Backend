@@ -12,4 +12,10 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 const promisePool = pool.promise();
+
+const closePool = async () => {
+  await promisePool.end();
+};
+
 export default promisePool;
+export { closePool };
