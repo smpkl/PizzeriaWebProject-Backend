@@ -17,9 +17,10 @@ import {
  */
 const getAllProducts = async (req, res, next) => {
   try {
-    const [products] = await findAllProducts();
+    const products = await findAllProducts();
     res.status(200).json({ message: "Products found", products });
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error getting products" });
   }
 };
