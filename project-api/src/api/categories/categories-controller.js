@@ -23,7 +23,7 @@ const getAllCategories = async (req, res, next) => {
  */
 const getCategoryById = async (req, res, next) => {
   try {
-    const [category] = await findCategoryById(req.params.id);
+    const category = await findCategoryById(req.params.id);
     if (category) {
       res.status(200).json({ message: "Category found", category });
     } else {

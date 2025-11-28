@@ -21,7 +21,7 @@ const findCategoryById = async (id) => {
   if (category.length === 0) {
     return false;
   }
-  return category;
+  return category[0];
 };
 
 /**

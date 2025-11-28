@@ -47,7 +47,7 @@ const findMealProducts = async (id) => {
  */
 const addNewMeal = async (meal) => {
   const { name, price, filename } = meal;
-  const sql = `INSERT INTO ${tableName} (name, price, filename) 
+  const sql = `INSERT INTO meals (name, price, filename) 
                Values (?, ?, ?)`;
   const params = [name, price, filename ?? null];
   const result = await promisePool.execute(sql, params);
@@ -74,7 +74,7 @@ const modifyMealById = async (id, newInfo) => {
       price: newInfo.price ?? price,
     };
     const sql = `
-    UPDATE ${tableName}
+    UPDATE meals
     SET name = ?, price = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
