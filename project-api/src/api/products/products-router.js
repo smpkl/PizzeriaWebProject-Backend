@@ -69,6 +69,8 @@ productsRouter
   .get(getProductById)
   .put(
     authenticateToken,
+    upload.single(),
+    createCardIMG,
     productValidationChain(),
     validationErrors,
     putProduct
