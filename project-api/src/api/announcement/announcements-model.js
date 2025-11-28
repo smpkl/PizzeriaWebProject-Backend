@@ -59,7 +59,7 @@ const modifyAnnouncementById = async (id, newInfo) => {
     };
     const sql = `
     UPDATE announcements
-    SET title = ?, text = ?, image = ?
+    SET title = ?, text = ?, filename = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
       updateJSON.title,
