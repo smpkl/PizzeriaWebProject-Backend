@@ -17,7 +17,7 @@ import {
  */
 const getAllProducts = async (req, res, next) => {
   try {
-    const [products] = await findAllProducts();
+    const products = await findAllProducts();
     res.status(200).json({ message: "Products found", products });
   } catch (error) {
     next({ status: 500, message: "Error getting products" });
@@ -29,7 +29,7 @@ const getAllProducts = async (req, res, next) => {
  */
 const getProductById = async (req, res, next) => {
   try {
-    const [product] = await findOneProductById(req.params.id);
+    const product = await findOneProductById(req.params.id);
     if (product) {
       res.status(200).json({ message: "Product found", product });
     } else {
@@ -45,7 +45,7 @@ const getProductById = async (req, res, next) => {
  */
 const getAllProductsByCategory = async (req, res, next) => {
   try {
-    const [products] = await getProductsByCategory(req.params.categoryId);
+    const products = await getProductsByCategory(req.params.categoryId);
     if (products) {
       res.status(200).json({ message: "Products found", products });
     } else {
@@ -61,7 +61,7 @@ const getAllProductsByCategory = async (req, res, next) => {
  */
 const getProductsByTagId = async (req, res, next) => {
   try {
-    const [products] = await getProductsByTag(req.params.tagId);
+    const products = await getProductsByTag(req.params.tagId);
     if (products) {
       res.status(200).json({ message: "Products found", products });
     } else {
