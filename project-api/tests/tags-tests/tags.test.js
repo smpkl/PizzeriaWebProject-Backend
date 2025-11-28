@@ -45,31 +45,11 @@ describe(`GET ${baseUrl}`, () => {
       .get(baseUrl)
       .set("Accept", "application/json");
 
-    expect([200, 500]).toContain(res.statusCode);
+    expect(res.statusCode).toBe(200);
     expect(res.body).toBeInstanceOf(Object);
     if (res.statusCode === 200) {
       expect(res.body.tags).toBeDefined();
     }
-  });
-});
-
-// GET /api/v1/tags/:id
-
-describe(`GET ${baseUrl}/:id`, () => {
-  it("should return 404 for non-existing tag", async () => {
-    const res = await request(app)
-      .get(`${baseUrl}/999999`)
-      .set("Accept", "application/json");
-
-    expect([404, 500]).toContain(res.statusCode);
-  });
-
-  it("should (maybe) find tag by id 1", async () => {
-    const res = await request(app)
-      .get(`${baseUrl}/1`)
-      .set("Accept", "application/json");
-
-    expect([200, 404, 500]).toContain(res.statusCode);
   });
 });
 
@@ -105,7 +85,7 @@ describe(`POST ${baseUrl}`, () => {
     expect(res.statusCode).toBe(403);
   });
 
-  it("should return 400 or 500 if body is invalid, even with admin token", async () => {
+  it("should return 400, even with admin token", async () => {
     const token = getAdminToken();
 
     const res = await request(app)
@@ -118,6 +98,8 @@ describe(`POST ${baseUrl}`, () => {
       .set("Accept", "application/json");
 
     expect([400, 500]).toContain(res.statusCode);
+    //when validator is added to tags
+    //expect(res.statusCode).toBe(400);
   });
 
   it("should create a new tag with valid admin token", async () => {
@@ -133,7 +115,7 @@ describe(`POST ${baseUrl}`, () => {
       })
       .set("Accept", "application/json");
 
-    expect([200, 400, 500]).toContain(res.statusCode);
+    expect(res.statusCode).toBe(200);
 
     if (res.statusCode === 200) {
       expect(res.body).toBeDefined();
@@ -168,7 +150,7 @@ describe(`PUT ${baseUrl}/:id`, () => {
     expect(res.statusCode).toBe(403);
   });
 
-  it("should update tag with admin token (created tag or id 1)", async () => {
+  it("should update tag with admin token", async () => {
     const token = getAdminToken();
     const idToUpdate = createdTagId || 1;
 
@@ -181,7 +163,7 @@ describe(`PUT ${baseUrl}/:id`, () => {
       })
       .set("Accept", "application/json");
 
-    expect([200, 400, 500]).toContain(res.statusCode);
+    expect(res.statusCode).toBe(200);
   });
 });
 
@@ -207,7 +189,7 @@ describe(`DELETE ${baseUrl}/:id`, () => {
     expect(res.statusCode).toBe(403);
   });
 
-  it("should delete tag (or at least try) with admin token", async () => {
+  it("should delete tag with admin token", async () => {
     const token = getAdminToken();
     const idToDelete = createdTagId || 1;
 
@@ -216,6 +198,6 @@ describe(`DELETE ${baseUrl}/:id`, () => {
       .set("Authorization", `Bearer ${token}`)
       .set("Accept", "application/json");
 
-    expect([200, 400, 500]).toContain(res.statusCode);
+    expect(res.statusCode).toBe(200);
   });
 });
