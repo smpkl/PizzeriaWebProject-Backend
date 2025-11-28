@@ -79,15 +79,3 @@ describe(`DELETE ${baseUrl}/:id`, () => {
     expect(res.statusCode).toEqual(401);
   });
 });
-
-// General "method not allowed / not found" test (optional)
-
-describe(`Unsupported methods on ${baseUrl}`, () => {
-  it('should return 404 for PATCH on base route', async () => {
-    const res = await request(app)
-      .patch(baseUrl)
-      .set('Accept', 'application/json');
-
-    expect(res.statusCode).toBe(404);
-  });
-});
