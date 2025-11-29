@@ -37,7 +37,7 @@ const getMealById = async (req, res, next) => {
 
 const getMealProducts = async (req, res, next) => {
   try {
-    const products = await findMealProducts(req.params.id);
+    const products = await findMealProducts(req.params.mealId);
     console.log(products);
     if (products) {
       res.status(200).json({ message: "Meal products found", products });
