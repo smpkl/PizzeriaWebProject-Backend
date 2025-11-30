@@ -9,6 +9,9 @@ const findAllProducts = async () => {
   const [products] = await promisePool.query(
     "SELECT products.*, GROUP_CONCAT(tags.title SEPARATOR ', ') AS tags FROM products LEFT JOIN products_tags ON product_id = products.id LEFT JOIN tags ON products_tags.tag_id = tags.id GROUP BY products.id;"
   );
+  products.forEach((p) => {
+    p.tags = p.tags ? p.tags.split(",") : [];
+  });
   return products;
 };
 
@@ -25,6 +28,9 @@ const findOneProductById = async (id) => {
   if (product.length === 0) {
     return false;
   }
+
+  product.tags = product.tags ? product.tags.split(",") : [];
+
   return product[0];
 };
 
@@ -41,6 +47,9 @@ const getProductsByCategory = async (categoryId) => {
   if (productsByCategory.length === 0) {
     return false;
   }
+  productsByCategory.forEach((p) => {
+    p.tags = p.tags ? p.tags.split(",") : [];
+  });
   return productsByCategory;
 };
 
