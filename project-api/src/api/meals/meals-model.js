@@ -69,10 +69,11 @@ const addNewMeal = async (meal) => {
 const modifyMealById = async (id, newInfo) => {
   const meal = await findMealById(id);
   if (meal) {
-    const { name, price } = meal;
+    const { name, price, filename } = meal;
     const updateJSON = {
       name: newInfo.name ?? name,
       price: newInfo.price ?? price,
+      filename: newInfo.filename ?? filename,
     };
     const sql = `
     UPDATE meals
