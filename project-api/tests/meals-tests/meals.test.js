@@ -50,12 +50,12 @@ describe(`GET ${baseUrl}/:id`, () => {
     expect([404, 500]).toContain(res.statusCode);
   });
 
-  it("should return a meal for existing id", async () => {
+  it("should return a meal for existing id or 404 if db does not have meal on id 1", async () => {
     const res = await request(app)
       .get(`${baseUrl}/1`)
       .set("Accept", "application/json");
 
-    expect([200, 500]).toContain(res.statusCode);
+    expect([200, 404]).toContain(res.statusCode);
   });
 });
 
