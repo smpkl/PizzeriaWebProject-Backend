@@ -46,6 +46,33 @@ const couponValidationChain = () => {
   ];
 };
 
+const couponPutValidationChain = () => {
+  return [
+    body("coupon")
+      .optional()
+      .trim()
+      .isLength({ min: 2, max: 50 })
+      .withMessage("Coupon must be between 2 to 50 characters long."),
+    body("discount_percentage")
+      .optional()
+      .trim()
+      .isFloat()
+      .withMessage(
+        "Coupon discount percentage must be a valid (decimal) number."
+      ),
+    body("start_date")
+      .optional()
+      .trim()
+      .isISO8601() // datetime
+      .withMessage("Coupon start date must be a valid date."),
+    body("end_date")
+      .optional()
+      .trim()
+      .isISO8601() // datetime
+      .withMessage("Coupon end date must be a valid date."),
+  ];
+};
+
 // Routes related to announcements:
 // Täytyykö gorAllCoupons laittaa authenticateToken? Voiko kuka tahansa hakea kaikki kupongit? Väärinkäyttömahdollisuus?
 // Asiakkaan syöttämä kuponki pitää kuitenkin jotenkin tarkastaa, vaikka käyttäjä ei ole kirjautuneena.
@@ -64,7 +91,7 @@ couponsRouter
   .get(getCouponById) // Tämä myös?
   .put(
     authenticateToken,
-    couponValidationChain(),
+    couponPutValidationChain(),
     validationErrors,
     updateCoupon
   )

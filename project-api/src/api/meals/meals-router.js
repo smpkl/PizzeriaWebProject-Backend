@@ -36,6 +36,21 @@ const mealValidationChain = () => {
   ];
 };
 
+const mealPutValidationChain = () => {
+  return [
+    body("name")
+      .optional()
+      .trim()
+      .isLength()
+      .withMessage("Meal name must be between 2 to 50 characters long."),
+    body("price")
+      .optional()
+      .trim()
+      .isFloat()
+      .withMessage("Meal price must be valid (decimal) number."),
+  ];
+};
+
 // Routes related to meals:
 mealsRouter
   .route("/")
@@ -55,7 +70,7 @@ mealsRouter
     authenticateToken,
     upload.single("file"),
     createCardIMG,
-    mealValidationChain(),
+    mealPutValidationChain(),
     validationErrors,
     putMeal
   )

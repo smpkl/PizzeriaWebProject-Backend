@@ -52,6 +52,36 @@ const productValidationChain = () => {
   ];
 };
 
+const productPutValidationChain = () => {
+  return [
+    body("name")
+      .optional()
+      .trim()
+      .isLength({ min: 3, max: 50 })
+      .withMessage("Product name must be between 3 to 50 characters long."),
+    body("ingredients")
+      .optional()
+      .trim()
+      .isLength({ max: 700 })
+      .withMessage("Product ingredients text limit is 700 characters."),
+    body("price")
+      .optional()
+      .trim()
+      .isFloat()
+      .withMessage("Product price must be valid (decimal) number."),
+    body("category")
+      .optional()
+      .trim()
+      .isInt()
+      .withMessage("Product category must be an integer."),
+    body("description")
+      .optional()
+      .trim()
+      .isLength({ max: 700 })
+      .withMessage("Product description text limit is 700 characters."),
+  ];
+};
+
 productsRouter
   .route("/")
   .get(getAllProducts)
@@ -71,7 +101,7 @@ productsRouter
     authenticateToken,
     upload.single(),
     createCardIMG,
-    productValidationChain(),
+    productPutValidationChain(),
     validationErrors,
     putProduct
   )

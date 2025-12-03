@@ -17,9 +17,9 @@ import {
 
 const orderRouter = express.Router();
 
-const orderValidationChain = () => {
+const orderPostValidationChain = () => {
   return [
-    body("user_id")
+    body("userId")
       .optional()
       .trim()
       .isInt()
@@ -31,14 +31,29 @@ const orderValidationChain = () => {
       .bail()
       .isLength({ min: 1, max: 50 })
       .withMessage("Order status must be between 1 to 50 characters long."),
-    body("order_type")
+    body("orderType")
       .trim()
       .notEmpty()
       .withMessage("Order type cannot be empty.")
       .bail()
       .isLength({ min: 1, max: 50 })
       .withMessage("Order type must be between 1 to 50 characters long."),
-    body("delivery_address")
+    body("timeOption")
+      .trim()
+      .notEmpty()
+      .withMessage("Order time option cannot be empty.")
+      .bail()
+      .isLength({ min: 1, max: 50 })
+      .withMessage(
+        "Order time option must be between 1 to 50 characters long."
+      ),
+    body("dateTime")
+      .notEmpty()
+      .withMessage("Order's ready time cannot be empty.")
+      .bail()
+      .isISO8601()
+      .withMessage("Order's ready time must be a valid date."),
+    body("deliveryAddress")
       .trim()
       .notEmpty()
       .withMessage("Delivery address cannot be empty.")
@@ -50,7 +65,7 @@ const orderValidationChain = () => {
       .withMessage(
         "Delivery address cannot contain special characters (!, ?, # etc.)."
       ),
-    body("pizzeria_address")
+    body("pizzeriaAddress")
       .trim()
       .notEmpty()
       .withMessage("Pizzeria address cannot be empty.")
@@ -62,6 +77,29 @@ const orderValidationChain = () => {
       .withMessage(
         "Pizzeria address cannot contain special characters (!, ?, # etc.)."
       ),
+    body("customerName")
+      .trim()
+      .notEmpty()
+      .withMessage("Customer name cannot be empty.")
+      .bail()
+      .isAlpha("fi-FI", { ignore: " -'" })
+      .withMessage("Customer name can only contain letters"),
+    body("customerPhone")
+      .trim()
+      .notEmpty()
+      .withMessage("Customer phonenumber cannot be empty.")
+      .bail()
+      .isLength({ min: 8, max: 50 })
+      .withMessage(
+        "Customer phonenumber must be between 8 to 50 characters long."
+      ),
+    body("customerEmail")
+      .trim()
+      .notEmpty()
+      .withMessage("Customer email cannot be empty.")
+      .bail()
+      .isEmail()
+      .withMessage("Customer email must be a valid email address."),
     body("price")
       .trim()
       .notEmpty()
@@ -72,17 +110,91 @@ const orderValidationChain = () => {
   ];
 };
 
+const orderPutValidationChain = () => {
+  return [
+    body("userId")
+      .optional()
+      .trim()
+      .isInt()
+      .withMessage("Order user ID name must be an integer."),
+    body("status")
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 50 })
+      .withMessage("Order status must be between 1 to 50 characters long."),
+    body("orderType")
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 50 })
+      .withMessage("Order type must be between 1 to 50 characters long."),
+    body("timeOption")
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 50 })
+      .withMessage(
+        "Order time option must be between 1 to 50 characters long."
+      ),
+    body("dateTime")
+      .optional()
+      .trim()
+      .isISO8601()
+      .withMessage("Order's ready time must be a valid date."),
+    body("deliveryAddress")
+      .optional()
+      .trim()
+      .isLength({ min: 10, max: 400 })
+      .withMessage("Delivery address must be atleast 10 characters long.")
+      .bail()
+      .isAlphanumeric("en-US", { ignore: " .,':;" })
+      .withMessage(
+        "Delivery address cannot contain special characters (!, ?, # etc.)."
+      ),
+    body("pizzeriaAddress")
+      .optional()
+      .trim()
+      .isLength({ min: 10, max: 400 })
+      .withMessage("Pizzeria address must be atleast 10 characters long.")
+      .bail()
+      .isAlphanumeric("en-US", { ignore: " .,':;" })
+      .withMessage(
+        "Pizzeria address cannot contain special characters (!, ?, # etc.)."
+      ),
+    body("customerName")
+      .optional()
+      .trim()
+      .isAlpha("fi-FI", { ignore: " -'" })
+      .withMessage("Customer name can only contain letters"),
+    body("customerPhone")
+      .optional()
+      .trim()
+      .isLength({ min: 8, max: 50 })
+      .withMessage(
+        "Customer phonenumber must be between 8 to 50 characters long."
+      ),
+    body("customerEmail")
+      .optional()
+      .trim()
+      .isEmail()
+      .withMessage("Customer email must be a valid email address."),
+    body("price")
+      .optional()
+      .trim()
+      .isFloat()
+      .withMessage("Order price must be valid (decimal) number."),
+  ];
+};
+
 // Routes related to announcements:
 // Mihin tänne täytyy laittaa tota authenticateTokenia?
 orderRouter
   .route("/")
   .get(authenticateToken, getAllOrders)
-  .post(orderValidationChain(), validationErrors, addOrder);
+  .post(orderPostValidationChain(), validationErrors, addOrder);
 
 orderRouter
   .route("/:id")
   .get(getOrderById)
-  .put(orderValidationChain(), validationErrors, updateOrder)
+  .put(orderPutValidationChain(), validationErrors, updateOrder)
   .delete(authenticateToken, deleteOrder);
 
 // Products in the order (parameter=order id)

@@ -38,6 +38,25 @@ const announcementValidationChain = () => {
   ];
 };
 
+const announcementPutValidationChain = () => {
+  return [
+    body("title")
+      .optional()
+      .trim()
+      .isLength({ min: 2, max: 50 })
+      .withMessage(
+        "Announcement title must be between 2 to 50 characters long."
+      ),
+    body("text")
+      .optional()
+      .trim()
+      .isLength({ min: 2, max: 700 })
+      .withMessage(
+        "Announcement text must be between 2 to 700 characters long."
+      ),
+  ];
+};
+
 // Routes related to announcements:
 announcRouter.route("/").get(getAllAnnouncements);
 
@@ -60,7 +79,7 @@ announcRouter
     authenticateToken,
     upload.single("file"),
     createOriginal,
-    announcementValidationChain(),
+    announcementPutValidationChain(),
     validationErrors,
     putAnnouncement
   );

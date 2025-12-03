@@ -19,6 +19,17 @@ const categoryValidationChain = () => {
       .trim()
       .notEmpty()
       .withMessage("Category name cannot be empty.")
+      .bail()
+      .isLength({ min: 2, max: 50 })
+      .withMessage("Category name must be between 2 to 50 characters long."),
+  ];
+};
+
+const categoryPutValidationChain = () => {
+  return [
+    body("name")
+      .optional()
+      .trim()
       .isLength({ min: 2, max: 50 })
       .withMessage("Category name must be between 2 to 50 characters long."),
   ];
@@ -41,7 +52,7 @@ categoriesRouter
   .delete(authenticateToken, deleteCategory)
   .put(
     authenticateToken,
-    categoryValidationChain(),
+    categoryPutValidationChain(),
     validationErrors,
     putCategory
   );

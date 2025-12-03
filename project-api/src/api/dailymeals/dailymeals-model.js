@@ -21,6 +21,7 @@ const findDailymealByDay = async (day) => {
     `SELECT meals.* FROM meals INNER JOIN daily_meals ON meals.id = daily_meals.meal_id WHERE daily_meals.day = ?`,
     [day]
   );
+  console.log(dailymeal);
   if (dailymeal.length === 0) {
     return false;
   }

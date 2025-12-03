@@ -58,6 +58,48 @@ const userValidationChain = () => {
   ];
 };
 
+const userPutValidationChain = () => {
+  return [
+    body("first_name")
+      .optional()
+      .trim()
+      .notEmpty()
+      .withMessage("Firstname cannot be empty.")
+      .bail()
+      .isAlpha("fi-FI", { ignore: "-'" })
+      .withMessage("Firstname can only contain letters"),
+    body("last_name")
+      .optional()
+      .trim()
+      .notEmpty()
+      .withMessage("Lastname cannot be empty.")
+      .bail()
+      .isAlpha("fi-FI", { ignore: "-'" })
+      .withMessage("Lastname can only contain letters"),
+    body("email")
+      .optional()
+      .trim()
+      .isEmail()
+      .withMessage("Email must be valid."),
+    body("address")
+      .optional()
+      .trim()
+      .isLength({ min: 10, max: 400 })
+      .withMessage("Address must be atleast 10 characters long.")
+      .bail()
+      .isAlphanumeric("en-US", { ignore: " .,':;" })
+      .withMessage("Address cannot contain special characters (!, ?, # etc.)."),
+    body("password")
+      .optional()
+      .trim()
+      .notEmpty()
+      .withMessage("Password cannot be empty.")
+      .bail()
+      .isLength({ min: 8 })
+      .withMessage("Password must be atleast 8 characters long."),
+  ];
+};
+
 // Routes related to users:
 usersRouter
   .route("/")

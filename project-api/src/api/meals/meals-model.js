@@ -20,7 +20,7 @@ const findMealById = async (id) => {
   if (meal.length === 0) {
     return false;
   }
-  return meal;
+  return meal[0];
 };
 
 /**

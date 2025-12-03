@@ -20,7 +20,7 @@ const getOneTagById = async (id) => {
   if (tag.length === 0) {
     return false;
   }
-  return tag;
+  return tag[0];
 };
 
 /**

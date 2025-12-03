@@ -23,7 +23,7 @@ const findAnnouncementById = async (id) => {
   if (announcement.length === 0) {
     return false;
   }
-  return announcement;
+  return announcement[0];
 };
 /**
  * Query for adding new announcement to the database
@@ -54,7 +54,7 @@ const addNewAnnouncement = async (announcement) => {
 const modifyAnnouncementById = async (id, newInfo) => {
   const announcement = await findAnnouncementById(id);
   if (announcement) {
-    const { title, text, filename } = announcement[0];
+    const { title, text, filename } = announcement;
     const updateJSON = {
       title: newInfo.title ?? title,
       text: newInfo.text ?? text,

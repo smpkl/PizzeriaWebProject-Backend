@@ -50,16 +50,34 @@ const findAllOrdersByUserId = async (userId) => {
  * if added to the database
  */
 const addNewOrder = async (order) => {
-  const { userId, status, orderType, deliveryAddress, pizzeriaAddress, price } =
-    order;
-  const sql = `INSERT INTO ${tableName} (user_id, status, order_type, delivery_address, pizzeria_address, price) 
-               Values (?, ?, ?, ?, ?, ?)`;
-  const params = [
+  console.log(order);
+  const {
     userId,
     status,
     orderType,
+    timeOption,
+    dateTime,
     deliveryAddress,
     pizzeriaAddress,
+    customerName,
+    customerEmail,
+    customerPhone,
+    details,
+    price,
+  } = order;
+  const sql = `INSERT INTO ${tableName} (user_id, status, order_type, time_option, date_time, delivery_address, pizzeria_address, customer_name, customer_email, customer_phone, details, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const params = [
+    userId ?? null,
+    status,
+    orderType,
+    timeOption,
+    dateTime,
+    deliveryAddress,
+    pizzeriaAddress,
+    customerName,
+    customerEmail,
+    customerPhone,
+    details,
     price,
   ];
   const result = await promisePool.execute(sql, params);
@@ -79,33 +97,52 @@ const addNewOrder = async (order) => {
  */
 const modifyOrderById = async (id, newInfo) => {
   const order = await findOneOrderById(id);
+  console.log(order);
   if (order) {
     const {
       user_id,
       status,
       order_type,
+      time_option,
+      date_time,
       delivery_address,
       pizzeria_address,
+      customer_name,
+      customer_email,
+      customer_phone,
+      details,
       price,
     } = order;
     const updateJSON = {
       userId: newInfo.userId ?? user_id,
       status: newInfo.status ?? status,
       orderType: newInfo.orderType ?? order_type,
+      timeOption: newInfo.timeOption ?? time_option,
+      dateTime: newInfo.dateTime ?? date_time,
       deliveryAddress: newInfo.deliveryAddress ?? delivery_address,
       pizzeriaAddress: newInfo.pizzeriaAddress ?? pizzeria_address,
+      customerName: newInfo.customerName ?? customer_name,
+      customerEmail: newInfo.customerEmail ?? customer_email,
+      customerPhone: newInfo.customerPhone ?? customer_phone,
+      details: newInfo.details ?? details,
       price: newInfo.price ?? price,
     };
     const sql = `
     UPDATE ${tableName}
-    SET user_id = ?, status = ?, order_type = ?, delivery_address = ?, pizzeria_address = ?, price = ?
+    SET user_id = ?, status = ?, order_type = ?, time_option = ?, date_time = ?, delivery_address = ?, pizzeria_address = ?, customer_name = ?, customer_email = ?, customer_phone = ?, details = ?, price = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
       updateJSON.userId,
       updateJSON.status,
       updateJSON.orderType,
+      updateJSON.timeOption,
+      updateJSON.dateTime,
       updateJSON.deliveryAddress,
       updateJSON.pizzeriaAddress,
+      updateJSON.customerName,
+      updateJSON.customerEmail,
+      updateJSON.customerPhone,
+      updateJSON.details,
       updateJSON.price,
       id,
     ]);

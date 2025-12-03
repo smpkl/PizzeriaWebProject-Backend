@@ -1,3 +1,4 @@
+import e from "express";
 import {
   findAllOrders,
   findOneOrderById,
@@ -75,9 +76,11 @@ const addOrder = async (req, res, next) => {
     if (newOrderAdded) {
       res.status(201).json({ message: "New order added successfully" });
     } else {
+      console.log(newOrderAdded);
       next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error adding new order" });
   }
 };

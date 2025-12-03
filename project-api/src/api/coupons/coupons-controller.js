@@ -55,6 +55,15 @@ const addCoupon = async (req, res, next) => {
 
 const updateCoupon = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const updateComplete = await modifyCouponById(req.params.id, req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Coupon update was successfull" });
@@ -62,12 +71,22 @@ const updateCoupon = async (req, res, next) => {
       next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error updating a coupon" });
   }
 };
 
 const deleteCoupon = async (req, res, next) => {
   try {
+    const currentUser = res.locals.user;
+    if (!currentUser) {
+      next({ status: 401, message: "Unauthorized" });
+      return;
+    }
+    if (currentUser.role === "user") {
+      next({ status: 403, message: "Forbidden" });
+      return;
+    }
     const id = req.params.id;
     const result = await removeCoupon(id);
     if (result) {

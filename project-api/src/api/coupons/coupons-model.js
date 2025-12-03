@@ -19,6 +19,7 @@ const findCouponById = async (id) => {
     `SELECT * FROM coupons WHERE ID = ?`,
     [id]
   );
+  console.log(coupon);
   if (coupon.length === 0) {
     return false;
   }
@@ -52,17 +53,13 @@ const addNewCoupon = async (couponData) => {
  * if update goes through it returns JSON {couponId: id}
  */
 const modifyCouponById = async (id, newInfo) => {
-  const coupon = await findCouponById(id);
-  if (coupon) {
-    const {
-      coupon: currentCoupon,
-      discount_percentage,
-      start_date,
-      end_date,
-    } = coupon[0];
+  const couponData = await findCouponById(id);
+  //console.log("Modify", coupon);
+  if (couponData) {
+    const { coupon, discount_percentage, start_date, end_date } = couponData;
 
     const updateJSON = {
-      coupon: newInfo.coupon ?? currentCoupon,
+      coupon: newInfo.coupon ?? coupon,
       discount_percentage: newInfo.discount_percentage ?? discount_percentage,
       start_date: newInfo.start_date ?? start_date,
       end_date: newInfo.end_date ?? end_date,
