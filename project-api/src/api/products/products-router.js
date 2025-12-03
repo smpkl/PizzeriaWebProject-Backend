@@ -99,7 +99,7 @@ productsRouter
   .get(getProductById)
   .put(
     authenticateToken,
-    upload.single(),
+    upload.single("file"),
     createCardIMG,
     productPutValidationChain(),
     validationErrors,
