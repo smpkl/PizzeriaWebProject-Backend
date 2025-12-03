@@ -84,7 +84,7 @@ const addNewOrder = async (order) => {
   if (result[0].affectedRows === 0) {
     return false;
   }
-  return { orderId: result[0].insertId };
+  return { order_id: result[0].insertId };
 };
 
 /**

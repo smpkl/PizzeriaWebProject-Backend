@@ -56,15 +56,13 @@ const orderPostValidationChain = () => {
     body("deliveryAddress")
       .trim()
       .notEmpty()
-      .withMessage("Delivery address cannot be empty.")
+      .withMessage("User address cannot be empty.")
       .bail()
       .isLength({ min: 10, max: 400 })
-      .withMessage("Delivery address must be atleast 10 characters long.")
+      .withMessage("User address must be atleast 10 characters long.")
       .bail()
-      .isAlphanumeric("en-US", { ignore: " .,':;" })
-      .withMessage(
-        "Delivery address cannot contain special characters (!, ?, # etc.)."
-      ),
+      .matches(/^[0-9a-zA-ZäöåÄÖÅ .,'/:;-]+$/)
+      .withMessage("User address contains invalid characters."),
     body("pizzeriaAddress")
       .trim()
       .notEmpty()
@@ -73,10 +71,8 @@ const orderPostValidationChain = () => {
       .isLength({ min: 10, max: 400 })
       .withMessage("Pizzeria address must be atleast 10 characters long.")
       .bail()
-      .isAlphanumeric("en-US", { ignore: " .,':;" })
-      .withMessage(
-        "Pizzeria address cannot contain special characters (!, ?, # etc.)."
-      ),
+      .matches(/^[0-9a-zA-ZäöåÄÖÅ .,'/:;-]+$/)
+      .withMessage("Pizzeria address contains invalid characters."),
     body("customerName")
       .trim()
       .notEmpty()

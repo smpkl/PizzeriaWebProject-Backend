@@ -72,11 +72,16 @@ const getAllUsersOrders = async (req, res, next) => {
 
 const addOrder = async (req, res, next) => {
   try {
-    const newOrderAdded = await addNewOrder(req.body);
-    if (newOrderAdded) {
-      res.status(201).json({ message: "New order added successfully" });
+    const order = await addNewOrder(req.body);
+    if (order) {
+      res
+        .status(201)
+        .json({
+          message: "New order added successfully",
+          order_id: order.order_id,
+        });
     } else {
-      console.log(newOrderAdded);
+      console.log(order);
       next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
