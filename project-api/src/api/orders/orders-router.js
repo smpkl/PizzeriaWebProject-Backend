@@ -197,7 +197,7 @@ orderRouter
 orderRouter
   .route("/:orderId/products")
   .get(getOrderProducts)
-  .post(authenticateToken, postOrderProduct);
+  .post(postOrderProduct);
 
 orderRouter
   .route("/:orderId/products/:productId")

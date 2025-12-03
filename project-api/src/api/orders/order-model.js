@@ -199,17 +199,21 @@ const findOrderProducts = async (id) => {
  *  @param {*} orderId the id of the order to which the product will be attached to
  * @returns false if failed to create an new order-product pair, JSON {product_id: productId, order_id: orderId} if completed
  */
-const addOrderProduct = async (productId, orderId) => {
+const addOrderProduct = async (productId, orderId, quantity) => {
   try {
     const result = await promisePool.execute(
-      " INSERT INTO order_products (product_id, order_id) VALUES (?, ?)",
-      [Number(productId), Number(orderId)]
+      " INSERT INTO order_products (product_id, order_id, quantity) VALUES (?, ?, ?)",
+      [Number(productId), Number(orderId), Number(quantity)]
     );
     console.log(result);
     if (result[0].affectedRows === 0) {
       return false;
     }
-    return { product_id: Number(productId), order_id: Number(orderId) };
+    return {
+      product_id: Number(productId),
+      order_id: Number(orderId),
+      quantity: quantity,
+    };
   } catch (error) {
     console.log(error);
     return false;

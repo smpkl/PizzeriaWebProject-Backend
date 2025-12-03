@@ -74,12 +74,10 @@ const addOrder = async (req, res, next) => {
   try {
     const order = await addNewOrder(req.body);
     if (order) {
-      res
-        .status(201)
-        .json({
-          message: "New order added successfully",
-          order_id: order.order_id,
-        });
+      res.status(201).json({
+        message: "New order added successfully",
+        order_id: order.order_id,
+      });
     } else {
       console.log(order);
       next({ status: 400, message: "Check your request" });
@@ -145,19 +143,12 @@ const getOrderProducts = async (req, res, next) => {
  */
 const postOrderProduct = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
-    if (!currentUser) {
-      next({ status: 401, message: "Unauthorized" });
-      return;
-    }
-    if (currentUser.role === "user") {
-      next({ status: 403, message: "Forbidden" });
-      return;
-    }
-    const orderId = req.params.mealId;
+    const orderId = req.params.orderId;
     const productId = req.body.product_id;
+    const quantity = req.body.quantity;
+    console.log(orderId, productId);
 
-    const result = await addOrderProduct(productId, orderId);
+    const result = await addOrderProduct(productId, orderId, quantity);
     if (result) {
       res
         .status(200)

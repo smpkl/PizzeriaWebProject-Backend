@@ -142,6 +142,7 @@ DROP TABLE IF EXISTS `order_products`;
 CREATE TABLE IF NOT EXISTS `order_products` (
   `product_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`order_id`),
   KEY `FK__order_id` (`order_id`),
   KEY `FK_product_id` (`product_id`),
