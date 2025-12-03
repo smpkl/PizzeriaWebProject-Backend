@@ -32,7 +32,7 @@ const addNewTag = async (tagInfo) => {
   const { title, color_hex, icon } = tagInfo;
   const result = await promisePool.query(
     `INSERT INTO tags (title, color_hex, icon) VALUES (?, ?, ?)`,
-    [title, color_hex, icon]
+    [title, color_hex ?? null, icon ?? null]
   );
   if (result[0].affectedRows === 0) {
     return false;

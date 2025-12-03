@@ -51,7 +51,14 @@ const addNewFeedback = async (feedbackData) => {
   const { user_id, email, feedback, status, received, handled } = feedbackData;
   const sql = `INSERT INTO feedbacks (user_id, email, feedback, status, received, handled) 
                VALUES (?, ?, ?, ?, ?, ?)`;
-  const params = [user_id, email, feedback, status, received, handled];
+  const params = [
+    user_id ?? null,
+    email,
+    feedback,
+    status,
+    received,
+    handled ?? null,
+  ];
   const result = await promisePool.execute(sql, params);
   if (result[0].affectedRows === 0) {
     return false;

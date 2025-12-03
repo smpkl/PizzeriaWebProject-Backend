@@ -77,7 +77,7 @@ const addNewOrder = async (order) => {
     customerName,
     customerEmail,
     customerPhone,
-    details,
+    details ?? null,
     price,
   ];
   const result = await promisePool.execute(sql, params);

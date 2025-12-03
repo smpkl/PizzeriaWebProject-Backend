@@ -80,10 +80,10 @@ const addNewProduct = async (product) => {
         VALUES (?, ?, ?, ?, ?, ?)`;
   const params = [
     name,
-    ingredients,
+    ingredients ?? null,
     price,
-    category,
-    description,
+    category ?? null,
+    description ?? null,
     filename ?? null,
   ];
   const result = await promisePool.execute(sql, params);

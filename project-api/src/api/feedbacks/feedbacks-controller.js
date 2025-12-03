@@ -63,6 +63,7 @@ const addFeedback = async (req, res, next) => {
       next({ status: 400, message: "Check your request" });
     }
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error adding new feedback" });
   }
 };
