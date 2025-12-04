@@ -9,7 +9,6 @@ import {
 
 const dailymealsRouter = express.Router();
 
-// Routes related to categories:
 dailymealsRouter.route("/").get(getAllDailymeals);
 
 dailymealsRouter

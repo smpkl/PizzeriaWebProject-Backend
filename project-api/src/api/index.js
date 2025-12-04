@@ -10,6 +10,7 @@ import feedbacksRouter from "./feedbacks/feedbacks-router.js";
 import announcementsRouter from "./announcement/announcements-router.js";
 import ordersRouter from "./orders/orders-router.js";
 import couponsRouter from "./coupons/coupons-router.js";
+import locationsRouter from "./locations/locations-router.js";
 
 const router = express.Router();
 
@@ -24,5 +25,6 @@ router.use("/feedbacks", feedbacksRouter);
 router.use("/announcements", announcementsRouter);
 router.use("/orders", ordersRouter);
 router.use("/coupons", couponsRouter);
+router.use("/locations", locationsRouter);
 
 export default router;
