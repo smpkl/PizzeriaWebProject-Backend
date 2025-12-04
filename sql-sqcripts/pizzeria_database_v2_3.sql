@@ -125,6 +125,18 @@ CREATE TABLE IF NOT EXISTS `tags` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
+-- Dumping structure for taulu pizzeria_database.locations
+DROP TABLE IF EXISTS `locations`;
+CREATE TABLE IF NOT EXISTS `locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+
 -- Dumping structure for taulu pizzeria_database.meals_products
 DROP TABLE IF EXISTS `meals_products`;
 CREATE TABLE IF NOT EXISTS `meals_products` (
@@ -164,3 +176,11 @@ CREATE TABLE IF NOT EXISTS `products_tags` (
 
 -- Insert default days into daily_meals table
 INSERT INTO daily_meals (day) VALUES ("monday"),("tuesday"),("wednesday"),("thursday"),("friday"),("saturday"),("sunday");
+
+-- Insert default locations into locations table
+INSERT INTO locations (name, address, latitude, longitude) 
+VALUES ("TBA Pizzeria Pasila", "Pasilankatu 8, 00240, Helsinki", 60.197979, 24.927743), 
+("TBA Pizzeria Tikkurila", "Unikkotie 14, 01300, Vantaa", 60.292278, 25.035183 ), 
+("TBA Pizzeria Leppävaara", "Leppävaarankatu, 02600, Espoo", 60.217253, 24.808561 ), 
+("TBA Pizzeria Myllypuro", "Myllypurontie 6, 00920, Helsinki", 60.223402, 25.076147), 
+("TBA Pizzeria Myyrmäki", "Myyrmäenraitti, 01600, Vantaa", 60.265666, 24.851930);
