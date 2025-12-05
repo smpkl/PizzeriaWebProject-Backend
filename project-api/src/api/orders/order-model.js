@@ -183,7 +183,10 @@ const removeOrder = async (id) => {
  */
 const findOrderProducts = async (id) => {
   const [rows] = await promisePool.execute(
-    "SELECT products.* FROM order_products LEFT JOIN products ON product_id = products.id WHERE order_id = ?",
+     `SELECT products.*, order_products.quantity
+     FROM order_products
+     LEFT JOIN products ON order_products.product_id = products.id
+     WHERE order_products.order_id = ?`,
     [id]
   );
   console.log("rows", rows);
