@@ -126,7 +126,7 @@ const deleteOrder = async (req, res, next) => {
 
 const getOrderProducts = async (req, res, next) => {
   try {
-    const products = await findOrderProducts(req.params.id);
+    const products = await findOrderProducts(req.params.orderId);
     console.log(products);
     if (products) {
       res.status(200).json({ message: "Order products found", products });
