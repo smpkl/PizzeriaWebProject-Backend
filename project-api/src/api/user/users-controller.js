@@ -72,7 +72,7 @@ const getUserById = async (req, res, next) => {
   try {
     const user = await findOneUserById(req.params.id);
     if (user) {
-      res.status(200).json({ message: "User found", user });
+      res.status(200).json({ message: "User found", user_id: user.id });
     } else {
       next({ status: 404, message: "User not found" });
     }
@@ -88,12 +88,29 @@ const getUserByEmail = async (req, res, next) => {
   try {
     const user = await findOneUserByEmail(req.params.email);
     if (user) {
-      res.status(200).json({ message: "User found", user });
+      res.status(200).json({ message: "User found", user_id: user.id });
     } else {
       next({ status: 404, message: "User not found" });
     }
   } catch (error) {
     next({ status: 500, message: "Error getting user" });
+  }
+};
+
+/**
+ * Direct the GET users/me-request to model
+ */
+const getCurrentUser = async (req, res, next) => {
+  try {
+    const currentUser = res.locals.user;
+    const user = await findOneUserById(currentUser.id);
+    if (user) {
+      res.status(200).json({ message: "Current user found", user });
+    } else {
+      next({ status: 400, message: "Could not find current user" });
+    }
+  } catch (error) {
+    next({ status: 500, message: "Error getting current user" });
   }
 };
 
@@ -157,6 +174,7 @@ export {
   getAllUsers,
   getUserById,
   getUserByEmail,
+  getCurrentUser,
   postAdmin,
   postUser,
   putUser,

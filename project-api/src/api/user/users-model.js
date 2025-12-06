@@ -15,9 +15,10 @@ const findAllUsers = async () => {
  * @returns false if no user found, user if found
  */
 const findOneUserById = async (id) => {
-  const [user] = await promisePool.query(`SELECT * FROM users WHERE id = ?`, [
-    id,
-  ]);
+  const [user] = await promisePool.query(
+    `SELECT id, first_name, last_name, email, address, role FROM users WHERE id = ?`,
+    [id]
+  );
   if (user.length === 0) {
     return false;
   }
