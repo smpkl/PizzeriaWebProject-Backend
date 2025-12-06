@@ -111,7 +111,7 @@ usersRouter
   .route("/admin")
   .post(authenticateToken, userValidationChain(), validationErrors, postAdmin); // Vain toinen admin voi luoda uuden admin käyttäjän? Näinkö sovittiin? Tämä tarvitsee tokenin mutta peruskäyttäjän luominen ei.
 
-usersRouter.route("/me").post(authenticateToken, getCurrentUser);
+usersRouter.route("/me").get(authenticateToken, getCurrentUser);
 
 usersRouter
   .route("/:id")

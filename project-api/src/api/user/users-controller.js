@@ -74,9 +74,11 @@ const getUserById = async (req, res, next) => {
     if (user) {
       res.status(200).json({ message: "User found", user_id: user.id });
     } else {
+      console.log(user);
       next({ status: 404, message: "User not found" });
     }
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error getting user" });
   }
 };
@@ -103,7 +105,8 @@ const getUserByEmail = async (req, res, next) => {
 const getCurrentUser = async (req, res, next) => {
   try {
     const currentUser = res.locals.user;
-    const user = await findOneUserById(currentUser.id);
+    console.log("User controller: ", currentUser);
+    const user = await findOneUserById(currentUser.user_id);
     if (user) {
       res.status(200).json({ message: "Current user found", user });
     } else {
