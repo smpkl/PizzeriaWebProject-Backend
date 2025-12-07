@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(50) NOT NULL, 
   `password` varchar(300) NOT NULL, 
   `email` varchar(80) NOT NULL UNIQUE,
+  `phonenumber` varchar(80) NOT NULL,
   `address` varchar(150) NOT NULL, 
   `role` varchar(50) NOT NULL, 
   PRIMARY KEY (`id`)

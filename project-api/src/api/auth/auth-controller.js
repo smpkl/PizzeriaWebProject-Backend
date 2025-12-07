@@ -32,6 +32,7 @@ const postAdminLogin = async (req, res, next) => {
     firstname: user.first_name,
     lastname: user.last_name,
     email: user.email,
+    phonenumber: user.phonenumber,
     address: user.address,
     role: user.role,
   };
@@ -65,6 +66,7 @@ const postUserLogin = async (req, res, next) => {
     firstname: user.first_name,
     lastname: user.last_name,
     email: user.email,
+    phonenumber: user.phonenumber,
     address: user.address,
     role: user.role,
   };

@@ -39,6 +39,13 @@ const userValidationChain = () => {
       .bail()
       .isEmail()
       .withMessage("Email must be valid."),
+    body("phonenumber")
+      .trim()
+      .notEmpty()
+      .withMessage("Phonenumber cannot be empty.")
+      .bail()
+      .isLength({ min: 8, max: 50 })
+      .withMessage("Phonenumber must be between 8 to 50 characters long."),
     body("address")
       .trim()
       .notEmpty()
@@ -82,6 +89,11 @@ const userPutValidationChain = () => {
       .trim()
       .isEmail()
       .withMessage("Email must be valid."),
+    body("phonenumber")
+      .optional()
+      .trim()
+      .isLength({ min: 8, max: 50 })
+      .withMessage("Phonenumber must be between 8 to 50 characters long."),
     body("address")
       .optional()
       .trim()

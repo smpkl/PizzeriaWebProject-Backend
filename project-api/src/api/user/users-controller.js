@@ -49,6 +49,7 @@ const postUser = async (req, res, next) => {
       next({ status: 400, message: "Could not create user" });
     }
   } catch (error) {
+    console.log(error);
     next({ status: 500, message: "Error creating user" });
   }
 };

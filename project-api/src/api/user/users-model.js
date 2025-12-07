@@ -16,7 +16,7 @@ const findAllUsers = async () => {
  */
 const findOneUserById = async (id) => {
   const [user] = await promisePool.query(
-    `SELECT id, first_name, last_name, email, address, role FROM users WHERE id = ?`,
+    `SELECT id, first_name, last_name, email, phonenumber, address, role FROM users WHERE id = ?`,
     [id]
   );
   if (user.length === 0) {
@@ -48,10 +48,19 @@ const findOneUserByEmail = async (email) => {
  * if added to the database
  */
 const addNewUser = async (user) => {
-  const { first_name, last_name, email, password, address, role } = user;
-  const sql = `INSERT INTO users (first_name, last_name, email, password, address, role)
-               VALUES (?, ?, ?, ?, ?, ?)`;
-  const params = [first_name, last_name, email, password, address, role];
+  const { first_name, last_name, email, phonenumber, password, address, role } =
+    user;
+  const sql = `INSERT INTO users (first_name, last_name, email, phonenumber, password, address, role)
+               VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const params = [
+    first_name,
+    last_name,
+    email,
+    phonenumber,
+    password,
+    address,
+    role,
+  ];
   const rows = await promisePool.execute(sql, params);
   console.log("rows", rows);
   if (rows[0].affectedRows === 0) {
@@ -71,22 +80,25 @@ const addNewUser = async (user) => {
 const modifyUserById = async (id, newInfo) => {
   const user = await findOneUserById(id);
   if (user) {
-    const { first_name, last_name, email, password, address } = user;
+    const { first_name, last_name, email, phonenumber, password, address } =
+      user;
     const updateJSON = {
       first_name: newInfo.first_name ?? first_name,
       last_name: newInfo.last_name ?? last_name,
       email: newInfo.email ?? email,
+      phonenumber: newInfo.phonenumber ?? phonenumber,
       password: newInfo.password ?? password,
       address: newInfo.address ?? address,
     };
     const sql = `
     UPDATE users
-    SET first_name = ?, last_name = ?, email = ?, password = ?, address = ?
+    SET first_name = ?, last_name = ?, email = ?, phonenumber = ?, password = ?, address = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
       updateJSON.first_name,
       updateJSON.last_name,
       updateJSON.email,
+      updateJSON.phonenumber,
       updateJSON.password,
       updateJSON.address,
       id,
