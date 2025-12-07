@@ -29,8 +29,8 @@ const postAdminLogin = async (req, res, next) => {
 
   const userDetails = {
     user_id: user.id,
-    firstname: user.first_name,
-    lastname: user.last_name,
+    first_name: user.first_name,
+    last_name: user.last_name,
     email: user.email,
     phonenumber: user.phonenumber,
     address: user.address,
@@ -63,8 +63,8 @@ const postUserLogin = async (req, res, next) => {
 
   const userDetails = {
     user_id: user.id,
-    firstname: user.first_name,
-    lastname: user.last_name,
+    first_name: user.first_name,
+    last_name: user.last_name,
     email: user.email,
     phonenumber: user.phonenumber,
     address: user.address,

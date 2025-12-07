@@ -108,6 +108,7 @@ const getCurrentUser = async (req, res, next) => {
     const currentUser = res.locals.user;
     console.log("User controller: ", currentUser);
     const user = await findOneUserById(currentUser.user_id);
+    console.log(user);
     if (user) {
       res.status(200).json({ message: "Current user found", user });
     } else {

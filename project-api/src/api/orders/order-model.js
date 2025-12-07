@@ -50,7 +50,7 @@ const findAllOrdersByUserId = async (userId) => {
  * if added to the database
  */
 const addNewOrder = async (order) => {
-  console.log(order);
+  console.log("New order: ", order);
   const {
     userId,
     status,
@@ -183,7 +183,7 @@ const removeOrder = async (id) => {
  */
 const findOrderProducts = async (id) => {
   const [rows] = await promisePool.execute(
-     `SELECT products.*, order_products.quantity
+    `SELECT products.*, order_products.quantity
      FROM order_products
      LEFT JOIN products ON order_products.product_id = products.id
      WHERE order_products.order_id = ?`,

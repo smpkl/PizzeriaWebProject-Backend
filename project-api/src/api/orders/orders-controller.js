@@ -60,6 +60,7 @@ const getAllUsersOrders = async (req, res, next) => {
     }
 
     const orders = await findAllOrdersByUserId(req.params.id);
+    console.log("User orders: ", orders);
     if (orders) {
       res.status(200).json({ message: "User orders found", orders });
     } else {
