@@ -77,14 +77,16 @@ const modifyMealById = async (id, newInfo) => {
     };
     const sql = `
     UPDATE meals
-    SET name = ?, price = ?
+    SET name = ?, price = ?, filename = ?
     WHERE id = ?`;
     const result = await promisePool.execute(sql, [
       updateJSON.name,
       updateJSON.price,
+      updateJSON?.filename ?? null,
       id,
     ]);
     if (result[0].affectedRows === 0) {
+      console.log('no changes')
       return false;
     }
     return { mealId: id };
