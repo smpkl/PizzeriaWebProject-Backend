@@ -70,7 +70,7 @@ const postMeal = async (req, res, next) => {
 
     const newMeal = req.body;
     const result = await addNewMeal(newMeal);
-    if (result.productId) {
+    if (result.mealId) {
       res.status(200).json({ message: "New meal added", result });
     } else {
       next({ status: 400, message: "Could not add meal" });
