@@ -127,10 +127,10 @@ usersRouter.route("/me").get(authenticateToken, getCurrentUser);
 
 usersRouter
   .route("/:id")
-  .get(getUserById)
+  .get(authenticateToken, getUserById)
   .delete(authenticateToken, deleteUser)
-  .put(authenticateToken, userValidationChain(), validationErrors, putUser);
+  .put(authenticateToken, userPutValidationChain(), validationErrors, putUser);
 
-usersRouter.route("/email/:email").get(getUserByEmail);
+usersRouter.route("/email/:email").get(authenticateToken, getUserByEmail);
 
 export default usersRouter;
