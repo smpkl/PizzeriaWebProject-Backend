@@ -4,10 +4,10 @@
 # Projektin esittely ja dokumentaatio (To Be Announced)
 
 ## 1. Ryhmän jäsenet
-- Riikka Kautonen
-- Elias Rinne  
-- Sampo Klaavo
-- Jere Pyörökivi
+- Riikka Kautonen [RiikkaKoo] (https://github.com/RiikkaKoo)
+- Elias Rinne [MustBeViable] (https://github.com/MustBeViable) 
+- Sampo Klaavo [smpkl] (https://github.com/smpkl)
+- Jere Pyörökivi [Jere-4] (https://github.com/Jere-4)
 
 ---
 
@@ -229,7 +229,9 @@ node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
 ## 7. Ongelmat ja ongelmatilanteet
 - sähköpostiin: eioikea@sahkoposti.fi
 
-## 8 Ylläpito
+---
+
+## 8. Ylläpito
 - **Ylläpitäjät:**
     - Riikka Kautonen [RiikkaKoo] (https://github.com/RiikkaKoo)
     - Elias Rinne [MustBeViable] (https://github.com/MustBeViable) 
