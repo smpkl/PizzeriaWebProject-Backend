@@ -111,6 +111,7 @@ describe(`POST ${baseUrl}`, () => {
       feedback: "",
       status: "",
       received: "",
+      handled: "",
     };
 
     const res = await request(app)
@@ -123,12 +124,11 @@ describe(`POST ${baseUrl}`, () => {
 
   it("should add new feedback when body is valid", async () => {
     const validFeedback = {
-      user_id: 1,
       email: "test@example.com",
       feedback: "This is a valid test feedback.",
       status: "new",
-      received: "2025-01-01 12:00:00",
-      handled: null,
+      received: "2025-01-01",
+      handled: "2025-01-01",
     };
 
     const res = await request(app)

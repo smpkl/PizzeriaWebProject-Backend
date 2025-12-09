@@ -79,7 +79,7 @@ const updateFeedback = async (req, res, next) => {
       next({ status: 403, message: "Forbidden" });
       return;
     }
-    const updateComplete = await modifyFeedbackById(req.body);
+    const updateComplete = await modifyFeedbackById(req.params.id, req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Update was successfull" });
     } else {

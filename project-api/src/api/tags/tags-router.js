@@ -17,7 +17,8 @@ const tagValidationChain = () => {
   return [
     body("title")
       .trim()
-      .notEmpty("Tag must have a title.")
+      .notEmpty()
+      .withMessage("Tag must have a title.")
       .bail()
       .isLength({ min: 3, max: 50 })
       .withMessage("Tag title must be between 3 to 50 characters long."),
@@ -58,12 +59,12 @@ const tagPutValidationChain = () => {
 tagsRouter
   .route("/")
   .get(getTags)
-  .post(authenticateToken, tagValidationChain(), postTag);
+  .post(authenticateToken, tagValidationChain(), validationErrors, postTag);
 
 tagsRouter
   .route("/:id")
   .get(getTagById)
   .delete(authenticateToken, deleteTag)
-  .put(authenticateToken, tagPutValidationChain(), putTag);
+  .put(authenticateToken, tagPutValidationChain(), validationErrors, putTag);
 
 export default tagsRouter;

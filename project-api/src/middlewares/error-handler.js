@@ -1,6 +1,12 @@
 import { validationResult } from "express-validator";
 
 const errorHandler = (err, req, res, next) => {
+    console.log("ERROR HANDLER:", {
+    status: err.status,
+    code: err.code,
+    message: err.message,
+    stack: err.stack,
+  });
   if (err.code === "ER_DUP_ENTRY") {
     return res.status(400).json({
       error: {

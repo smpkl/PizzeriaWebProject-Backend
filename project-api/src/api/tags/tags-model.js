@@ -70,31 +70,30 @@ const removeTag = async (tagId) => {
  * if update goes through it returns JSON {tagId: id}
  */
 const updateTag = async (id, newInfo) => {
-  const [tag] = await getOneTagById(id);
-  if (tag) {
-    const { title, color_hex, icon } = tag;
-    const updateJSON = {
-      title: newInfo.title ?? title,
-      color_hex: newInfo.color_hex ?? color_hex,
-      icon: newInfo.icon ?? icon,
-    };
-    const sql = `
+  const tag = await getOneTagById(id);
+  if (!tag) {
+    return false;
+  }
+  const { title, color_hex, icon } = tag;
+  const updateJSON = {
+    title: newInfo.title ?? title,
+    color_hex: newInfo.color_hex ?? color_hex,
+    icon: newInfo.icon ?? icon,
+  };
+  const sql = `
     UPDATE tags
     SET title = ?, color_hex = ?, icon = ?
     WHERE id = ?`;
-    const result = await promisePool.execute(sql, [
-      updateJSON.title,
-      updateJSON.color_hex,
-      updateJSON.icon,
-      id,
-    ]);
-    if (result[0].affectedRows === 0) {
-      return false;
-    }
-    return { tagId: id };
-  } else {
+  const result = await promisePool.execute(sql, [
+    updateJSON.title,
+    updateJSON.color_hex,
+    updateJSON.icon,
+    id,
+  ]);
+  if (result[0].affectedRows === 0) {
     return false;
   }
+  return { tagId: id };
 };
 
 export { getAllTags, getOneTagById, addNewTag, removeTag, updateTag };

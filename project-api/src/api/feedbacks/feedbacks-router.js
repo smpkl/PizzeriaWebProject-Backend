@@ -81,7 +81,7 @@ const feedbackPutValidationChain = () => {
       .trim()
       .isISO8601() // datetime
       .withMessage("Feedback's arrival date must be a valid date."),
-    body("end_date")
+    body("handled")
       .optional()
       .isISO8601() // datetime
       .withMessage("Feedback's handling date must be a valid date."),

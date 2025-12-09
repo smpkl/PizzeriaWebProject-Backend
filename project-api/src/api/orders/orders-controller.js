@@ -94,6 +94,8 @@ const updateOrder = async (req, res, next) => {
     const updateComplete = await modifyOrderById(req.params.id, req.body);
     if (updateComplete) {
       res.status(200).json({ message: "Update was successfull" });
+    } else if (!updateComplete) {
+      next({ status: 404, message: "Order not found" });
     } else {
       next({ status: 400, message: "Check your request" });
     }
