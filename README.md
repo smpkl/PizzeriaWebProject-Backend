@@ -72,71 +72,99 @@ Omistajat/admin:
 ## 4. Asennus
 
 - tee 2 eri kansiota frontend ja backend
+  
 ```Bash
 mkdir frontend && mkdir backend
 ```
+
 - mene backend kansioon terminalissa tai IDE:ssä
+  
 ```Bash
 cd ./backend
 ```
-    - git clone https://github.com/smpkl/PizzeriaWebProject-Backend
-    - cd ./project-api
+
+- git clone https://github.com/smpkl/PizzeriaWebProject-Backend
+- cd ./project-api
+
 ```Bash
 cd ./project-api
 ```
-    - npm install
+
+- npm install
+
 ```Bash
 cd npm install
 ```
-    - avaa mysql
-    - aja alustus scriptit /backend/project-backend/sql-scripts
+
+- avaa mysql
+- aja alustus scriptit /backend/project-backend/sql-scripts
+
 ```sql
 SOURCE ./backend/project-backend/sql-scripts/pizzeria_database_v2_3.sql;
 ```
 ```sql
 SOURCE ./backend/project-backend/sql-scripts/data-tag-category-admin.sql;
 ```
-    - luo .env file
+
+- luo .env file
+
 ```Bash
 touch .env
 nano ./.env
 ```
-    - lisää .env.samplen mukaan omat ympäristömuuttujat
-    - aja dev moodissa apia
+
+- lisää .env.samplen mukaan omat ympäristömuuttujat
+- aja dev moodissa apia
 ```Bash
 cd npm run dev
 ```
-    - aja ohjelmaa tuotanto moodissa
+
+- aja ohjelmaa tuotanto moodissa
+
 ```Bash
 cd npm start
 ```
-    - mene frontend kansioon terminalissa tai IDE:ssä
+
+- mene frontend kansioon terminalissa tai IDE:ssä
+
 ```Bash
 cd ./frontend/
 ```
-    - kloonaa repositorio
+
+- kloonaa repositorio
+  
 ```Bash
 git clone https://github.com/smpkl/PizzeriaWebProject-Front
 ```
-    - cd ./project-frontend
+
+- cd ./project-frontend
+
 ```Bash
 cd ./frontend/project-fronend
 ```
-    - asenna vite
+
+- asenna vite
+  
 ```Bash
 npm install vite
 ```
-    - asenna dependecyt
+
+- asenna dependecyt
+  
 ```Bash
 npm install
 ```
-    - luo .env file
+
+- luo .env file
+
 ```Bash
 touch .env
 nano ./.env
 ```
-    - lisää .env.samplen mukaan omat ympäristömuuttujat
-    - aja dev moodissa fronttia
+
+- lisää .env.samplen mukaan omat ympäristömuuttujat
+- aja dev moodissa fronttia
+
 ```Bash
 npm run dev
 ```
