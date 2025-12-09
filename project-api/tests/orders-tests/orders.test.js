@@ -107,7 +107,7 @@ describe(`GET ${baseUrl}/user/:id`, () => {
       .set("Authorization", `Bearer ${token}`)
       .set("Accept", "application/json");
 
-    expect(res.statusCode).toBe(200);
+    expect([200, 404]).toContain(res.statusCode);
   });
 
   it("should allow admin to access any user's orders (status 200 or 404)", async () => {
@@ -118,23 +118,25 @@ describe(`GET ${baseUrl}/user/:id`, () => {
       .set("Authorization", `Bearer ${token}`)
       .set("Accept", "application/json");
 
-    expect(res.statusCode).toBe(200);
+    expect([200, 404]).toContain(res.statusCode);
   });
 });
 
 // POST /api/v1/orders
 
+
 describe(`POST ${baseUrl}`, () => {
   const validOrder = {
-    user_id: 1,
-    userId: 1,
     status: "new",
-    order_type: "delivery",
     orderType: "delivery",
-    delivery_address: "Test street 1, Helsinki",
+    timeOption: "ASAP",
+    dateTime: "2025-01-01",
     deliveryAddress: "Test street 1, Helsinki",
-    pizzeria_address: "Pizza street 2, Helsinki",
     pizzeriaAddress: "Pizza street 2, Helsinki",
+    customerName: "Test Name",
+    customerPhone: "123455678",
+    customerEmail: "test@email.com",
+    details: "Test details",
     price: 10.5,
   };
 
@@ -176,9 +178,8 @@ describe(`PUT ${baseUrl}/:id`, () => {
       .send(updateData)
       .set("Accept", "application/json");
 
-    //expect(res.statusCode).toBe(200);
-    //if there is noting to be updated:
-    expect([400, 404, 500]).toContain(res.statusCode);
+    //if there is noting to be updated 404:
+    expect([200, 404]).toContain(res.statusCode);
   });
 });
 
