@@ -4,10 +4,10 @@
 # Projektin esittely ja dokumentaatio (To Be Announced)
 
 ## 1. Ryhmän jäsenet
-- Riikka Kautonen [RiikkaKoo] (https://github.com/RiikkaKoo)
-- Elias Rinne [MustBeViable] (https://github.com/MustBeViable) 
-- Sampo Klaavo [smpkl] (https://github.com/smpkl)
-- Jere Pyörökivi [Jere-4] (https://github.com/Jere-4)
+- Riikka Kautonen [RiikkaKoo](https://github.com/RiikkaKoo)
+- Elias Rinne [MustBeViable](https://github.com/MustBeViable) 
+- Sampo Klaavo [smpkl](https://github.com/smpkl)
+- Jere Pyörökivi [Jere-4](https://github.com/Jere-4)
 
 ---
 
@@ -221,8 +221,7 @@ node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
 ---
 
 ## 6. Demo/esitys diat ja muut linkit
-- [wireframe mockup] (https://www.figma.com/design/6friFu5guACEfN9zNmMO1j/Untitled?node-id=0-1&m=dev&t=XIEMncLJKdyQ6v4o-1
-)
+- [wireframe / mockup](https://www.figma.com/design/6friFu5guACEfN9zNmMO1j/Untitled?node-id=0-1&m=dev&t=XIEMncLJKdyQ6v4o-1
 
 ---
 
@@ -233,7 +232,7 @@ node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
 
 ## 8. Ylläpito
 - **Ylläpitäjät:**
-    - Riikka Kautonen [RiikkaKoo] (https://github.com/RiikkaKoo)
-    - Elias Rinne [MustBeViable] (https://github.com/MustBeViable) 
-    - Sampo Klaavo [smpkl] (https://github.com/smpkl)
-    - Jere Pyörökivi [Jere-4] (https://github.com/Jere-4)
+    - Riikka Kautonen [RiikkaKoo](https://github.com/RiikkaKoo)
+    - Elias Rinne [MustBeViable](https://github.com/MustBeViable) 
+    - Sampo Klaavo [smpkl](https://github.com/smpkl)
+    - Jere Pyörökivi [Jere-4](https://github.com/Jere-4)
