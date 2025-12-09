@@ -122,7 +122,7 @@ cd npm run dev
 - aja ohjelmaa tuotanto moodissa
 
 ```Bash
-cd npm start
+npm start
 ```
 
 - mene frontend kansioon terminalissa tai IDE:ssä
