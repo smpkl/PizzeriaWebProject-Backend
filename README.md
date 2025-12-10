@@ -172,7 +172,23 @@ npm run dev
 
 # 5. Ohjeistus sovelluksen testaamiseen
 
-### Testien ajaminen
+### Toiminnallisuuksien testaaminen ja valmiiden testien ajaminen
+
+***Toiminnalisuuksien testaaminen***
+
+1. Linkit sivuille
+   - [Admin]()
+       - käyttäjä tunnuksia:
+           - 
+           -  
+   - [User]()
+       - sivuilla voi luoda halutessan tunnukset tai tilata ilman
+    
+- Testaamiseen admin sivuille tarvitset admin käyttäjän, mutta pizzerian puolella pääset ilman.
+  Testaillessa voit kirjautua tai olla kirjautumatta. Kokeile molempia!
+- Admin sivuilla tarvitset käyttäjätunnukset, mutta voit kokeilla että pystyykö ilman.
+
+***Valmiiden testien ajaminen***
 
 1. Varmista, että projektin riippuvuudet on asennettu:
 
