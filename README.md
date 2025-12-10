@@ -238,7 +238,7 @@ node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
 ## 6. Demo/esitys diat ja muut linkit
 - [wireframe / mockup](https://www.figma.com/design/6friFu5guACEfN9zNmMO1j/Untitled?node-id=0-1&m=dev&t=XIEMncLJKdyQ6v4o-1
       - Projektin avaamiseen tarvittava salasana: webdev-tba-ryhmäprojekti-pizzeria
-
+- [Powerpoint/esitys](https://metropoliafi-my.sharepoint.com/:p:/g/personal/eliasrin_metropolia_fi/IQB4kUf-SV1uTp0JnSMgwoP7AY93E3zeEq6DxMG2jnwv3eQ?e=Oqr2UY)
 ---
 
 ## 7. Ongelmat ja ongelmatilanteet
