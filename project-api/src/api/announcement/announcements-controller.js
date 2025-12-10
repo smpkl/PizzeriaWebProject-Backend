@@ -8,12 +8,12 @@ import {
 
 const getAllAnnouncements = async (req, res, next) => {
   try {
-    console.log("here")
+    console.log("here");
     const results = await findAllAnnouncements();
     res.status(200).json({ message: "Announcements found", results });
   } catch (error) {
-    console.log(error)
-    next({ status: 500, message: "Error getting meals" });
+    console.log(error);
+    next({ status: 500, message: "Error getting announcements" });
   }
 };
 

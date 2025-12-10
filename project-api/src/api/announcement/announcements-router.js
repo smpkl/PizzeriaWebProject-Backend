@@ -57,11 +57,56 @@ const announcementPutValidationChain = () => {
   ];
 };
 
-// Routes related to announcements:
+/**
+ * @api {get} /announcements Get all announcements
+ * @apiName GetAllAnnouncements
+ * @apiGroup Announcements
+ *
+ * @apiSuccess {Object[]} announcements List of announcements.
+ *
+ * @apiError (500) {Object} message Error getting announcements.
+ */
 announcRouter.route("/").get(getAllAnnouncements);
 
+/**
+ * @api {get} /announcements/:id Get announcement by its ID
+ * @apiName GetAnnouncementById
+ * @apiGroup Announcements
+ *
+ * @apiParam {Number} id Announcement unique ID.
+ *
+ * @apiSuccess {Object} success message Announcement found.
+ * @apiSuccess {Object} announcement data.
+ *
+ * @apiError (404) {Object} message Announcement not found.
+ * @apiError (500) {Object} message Error getting announcement.
+ */
 announcRouter.route("/:id").get(getAnnouncementById);
 
+/**
+ * @api {post} /announcements Create a new announcement
+ * @apiName PostAnnouncement
+ * @apiGroup Announcements
+ *
+ * @apiHeader {String} Authorization Bearer token.
+ *
+ * @apiBody {String{2..50}} title Announcement title.
+ * @apiBody {String{2..700}} text Announcement text.
+ * @apiBody {File} [file] Optional image upload.
+ *
+ * @apiSuccess {Object} message New announcement added.
+ * @apiSuccess {Object} announcement Created announcement object.
+ *
+ * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
+ * @apiError (403 Forbidden) Forbidden You don't have permission to create announcements.
+ *
+ * @apiError (400 ValidationError) TitleTooShort Title is shorter than 2 characters.
+ * @apiError (400 ValidationError) TitleTooLong Title is longer than 50 characters.
+ * @apiError (400 ValidationError) TextTooShort Text is shorter than 2 characters.
+ * @apiError (400 ValidationError) TextTooLong Text is longer than 700 characters.
+ *
+ * @apiError (500 ServerError) InternalError Error adding announcement.
+ */
 announcRouter
   .route("/")
   .post(
@@ -73,6 +118,32 @@ announcRouter
     postAnnouncement
   );
 
+/**
+ * @api {put} /announcements/:id Update an announcement
+ * @apiName PutAnnouncement
+ * @apiGroup Announcements
+ *
+ * @apiParam {Number} id Announcement unique ID.
+ *
+ * @apiHeader {String} Authorization Bearer token.
+ *
+ * @apiBody {String{2..50}} title Announcement title.
+ * @apiBody {String{2..700}} text Announcement text.
+ * @apiBody {File} [file] Optional image upload.
+ *
+ * @apiSuccess {Object} message Announcement info updated.
+ * @apiSuccess {Object} announcement Announcement object's ID.
+ *
+ * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
+ * @apiError (403 Forbidden) Forbidden You don't have permission to update announcements.
+ *
+ * @apiError (400 ValidationError) TitleTooShort Title is shorter than 2 characters.
+ * @apiError (400 ValidationError) TitleTooLong Title is longer than 50 characters.
+ * @apiError (400 ValidationError) TextTooShort Text is shorter than 2 characters.
+ * @apiError (400 ValidationError) TextTooLong Text is longer than 700 characters.
+ *
+ * @apiError (500 ServerError) InternalError Error updating announcement.
+ */
 announcRouter
   .route("/:id")
   .put(
@@ -84,6 +155,25 @@ announcRouter
     putAnnouncement
   );
 
+/**
+ * @api {delete} /announcements/:id Delete an announcement
+ * @apiName DeleteAnnouncement
+ * @apiGroup Announcements
+ *
+ * @apiParam {Number} id Announcement unique ID.
+ *
+ * @apiHeader {String} Authorization Bearer token.
+ *
+ * @apiSuccess {Object} message Announcement deleted.
+ * @apiSuccess {Object} announcement Announcement object's ID.
+ *
+ * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
+ * @apiError (403 Forbidden) Forbidden You don't have permission to delete announcements.
+ *
+ * @apiError (400 BadRequest) BadRequest Could not delete announcement.
+ *
+ * @apiError (500 ServerError) InternalError Error updating announcement.
+ */
 announcRouter.route("/:id").delete(authenticateToken, deleteAnnouncement);
 
 export default announcRouter;
