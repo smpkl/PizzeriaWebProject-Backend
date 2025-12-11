@@ -111,6 +111,19 @@ UPDATE `daily_meals` SET `meal_id` = 1 WHERE day = "friday";
 UPDATE `daily_meals` SET `meal_id` = 1 WHERE day = "saturday";
 UPDATE `daily_meals` SET `meal_id` = 5 WHERE day = "sunday";
 
+
+DELETE FROM `announcements`;
+INSERT INTO `announcements` (`title`, `text`, `filename`) VALUES 
+("Temporary Closure for Maintenance",
+"Our restaurant will be closed on XX.XX due to scheduled maintenance. We will reopen the following day as usual. Thank you for your understanding.",
+"pizzeria_img.jpg"),
+("New Seasonal Menu Available!",
+"We are excited to introduce our new seasonal menu starting from XX.XX. Come and enjoy fresh flavors inspired by the season!",
+"seasonal_menu.jpg"),
+("New Seasonal Menu Available!",
+"We are excited to introduce our new seasonal menu starting from XX.XX. Come and enjoy fresh flavors inspired by the season!",
+"seasonal_menu.jpg");
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
