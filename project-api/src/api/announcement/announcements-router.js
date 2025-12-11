@@ -62,9 +62,10 @@ const announcementPutValidationChain = () => {
  * @apiName GetAllAnnouncements
  * @apiGroup Announcements
  *
+ * @apiSuccess {Object} message Announcements found.
  * @apiSuccess {Object[]} announcements List of announcements.
  *
- * @apiError (500) {Object} message Error getting announcements.
+ * @apiError (500 ServerError) InternalError Error getting announcements
  */
 announcRouter.route("/").get(getAllAnnouncements);
 
@@ -73,13 +74,13 @@ announcRouter.route("/").get(getAllAnnouncements);
  * @apiName GetAnnouncementById
  * @apiGroup Announcements
  *
- * @apiParam {Number} id Announcement unique ID.
+ * @apiParam {Number} id Announcement's unique ID.
  *
  * @apiSuccess {Object} success message Announcement found.
- * @apiSuccess {Object} announcement data.
+ * @apiSuccess {Object} announcement Announcement data.
  *
- * @apiError (404) {Object} message Announcement not found.
- * @apiError (500) {Object} message Error getting announcement.
+ * @apiError (404 NotFound) NotFound Announcement not found.
+ * @apiError (500 ServerError) InternalError Error getting announcement.
  */
 announcRouter.route("/:id").get(getAnnouncementById);
 
@@ -95,7 +96,7 @@ announcRouter.route("/:id").get(getAnnouncementById);
  * @apiBody {File} [file] Optional image upload.
  *
  * @apiSuccess {Object} message New announcement added.
- * @apiSuccess {Object} announcement Created announcement object.
+ * @apiSuccess {Object} announcementId Created category object's ID.
  *
  * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
  * @apiError (403 Forbidden) Forbidden You don't have permission to create announcements.
@@ -132,7 +133,7 @@ announcRouter
  * @apiBody {File} [file] Optional image upload.
  *
  * @apiSuccess {Object} message Announcement info updated.
- * @apiSuccess {Object} announcement Announcement object's ID.
+ * @apiSuccess {Object} announcementId Announcement object's ID.
  *
  * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
  * @apiError (403 Forbidden) Forbidden You don't have permission to update announcements.
@@ -165,7 +166,7 @@ announcRouter
  * @apiHeader {String} Authorization Bearer token.
  *
  * @apiSuccess {Object} message Announcement deleted.
- * @apiSuccess {Object} announcement Announcement object's ID.
+ * @apiSuccess {Object} announcementId Announcement object's ID.
  *
  * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
  * @apiError (403 Forbidden) Forbidden You don't have permission to delete announcements.

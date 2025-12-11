@@ -1,0 +1,17 @@
+{
+  "name": "Pizzeria API",
+  "version": "1.0.0",
+  "description": "API documentation for To Be Announced group's web development project",
+  "title": "TBA Pizzeria API Documentation",
+  "url": "/api/v1",
+  "header": {
+    "title": "TBA Pizzeria API Documentation",
+    "content": "<p>This is API documentation for endpoints of a fictional pizzeria. This is part of a web development school project.</p>"
+  },
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  },
+  "exclude": ["node_modules/", "uploads/"],
+  "files": ["src/**/*.js"]
+}
