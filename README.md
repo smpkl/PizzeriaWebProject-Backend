@@ -240,7 +240,8 @@ node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
     - Projektin avaamiseen tarvittava salasana: webdev-tba-ryhmäprojekti-pizzeria
 - [Powerpoint/esitys](https://metropoliafi-my.sharepoint.com/:p:/g/personal/eliasrin_metropolia_fi/IQB4kUf-SV1uTp0JnSMgwoP7AY93E3zeEq6DxMG2jnwv3eQ?e=Oqr2UY)
 
-- [APIDoc dokumentaatio] ({serverinosoite}/docs)
+- [APIDoc dokumentaatio](https://smapo.swedencentral.cloudapp.azure.com/docs)
+    - Toimii jos serveri on päällä. Muuten dokumentaatio täytyy avata koodin kautta localhostissa.
 ---
 
 ## 7. Ongelmat ja ongelmatilanteet
