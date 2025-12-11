@@ -60,7 +60,7 @@ Omistajat/admin:
     - kuponkeja
         - lisätä, poistaa ja muokata
     - ilmoituksia
-        - lisätä, poistaa ja muokata
+        - lukea (hallinnointi tulee myöhemmässä 1.1 patchissa)
 - Voi hallinnoida omia tietoja
 
 ### Mahdolliset lisäominaisuudet
