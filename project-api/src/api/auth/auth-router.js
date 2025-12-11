@@ -13,6 +13,13 @@ const authRouter = express.Router();
  *
  * @apiSuccess {String} token Unique token for requests that require it.
  * @apiSuccess {Object} user User data for admin user.
+ * @apiSuccess {Number} user.id user id.
+ * @apiSuccess {String} user.first_name User's first_name.
+ * @apiSuccess {String} user.last_name User's last_name.
+ * @apiSuccess {String} user.email User's email.
+ * @apiSuccess {Number} user.phonenumber User's phonenumber.
+ * @apiSuccess {String} user.address User's address.
+ * @apiSuccess {String} user.role User's role.
  *
  * @apiError (404 NotFound) NotFound User not found.
  *
@@ -31,6 +38,13 @@ authRouter.route("/admin/login").post(postAdminLogin);
  *
  * @apiSuccess {String} token Unique token for requests that require it.
  * @apiSuccess {Object} user User data for a regular user.
+ * @apiSuccess {Number} user.id user id.
+ * @apiSuccess {String} user.first_name User's first_name.
+ * @apiSuccess {String} user.last_name User's last_name.
+ * @apiSuccess {String} user.email User's email.
+ * @apiSuccess {Number} user.phonenumber User's phonenumber.
+ * @apiSuccess {String} user.address User's address.
+ * @apiSuccess {String} user.role User's role.
  *
  * @apiError (404 NotFound) NotFound User not found.
  *

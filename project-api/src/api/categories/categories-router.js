@@ -40,8 +40,10 @@ const categoryPutValidationChain = () => {
  * @apiName GetAllCategories
  * @apiGroup Categories
  *
- * @apiSuccess {Object} message Categories found.
- * @apiSuccess {Object[]} categories List of categories.
+ * @apiSuccess {String} message Categories found.
+ * @apiSuccess {Object[]} category List of categories.
+ * @apiSuccess {Number} category.id Id of the category.
+ * @apiSuccess {String} category.name Name of the category.
  *
  * @apiError (500 ServerError) InternalError Error categories
  */
@@ -56,8 +58,8 @@ categoriesRouter.route("/").get(getAllCategories);
  *
  * @apiBody {String{2..50}} name Category name.
  *
- * @apiSuccess {Object} message New category added.
- * @apiSuccess {Object} categoryId Created category object's ID.
+ * @apiSuccess {String} message New category added.
+ * @apiSuccess {Number} categoryId Created category object's ID.
  *
  * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
  * @apiError (403 Forbidden) Forbidden You don't have permission to create category.
@@ -83,8 +85,10 @@ categoriesRouter
  *
  * @apiParam {Number} id Category's unique ID.
  *
- * @apiSuccess {Object} success message Category found.
+ * @apiSuccess {String} message Category found.
  * @apiSuccess {Object} category Category data.
+ * @apiSuccess {Number} category.id Id of the category.
+ * @apiSuccess {String} category.name Name of the category.
  *
  * @apiError (404 NotFound) NotFound Category not found.
  * @apiError (500 ServerError) InternalError Error getting category.
@@ -100,8 +104,8 @@ categoriesRouter.route("/:id").get(getCategoryById);
  *
  * @apiHeader {String} Authorization Bearer token.
  *
- * @apiSuccess {Object} message Category deleted.
- * @apiSuccess {Object} categoryId Category object's ID.
+ * @apiSuccess {String} message Category deleted.
+ * @apiSuccess {Number} categoryId Category object's ID.
  *
  * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
  * @apiError (403 Forbidden) Forbidden You don't have permission to delete category.
@@ -113,7 +117,7 @@ categoriesRouter.route("/:id").get(getCategoryById);
 categoriesRouter.route("/:id").delete(authenticateToken, deleteCategory);
 
 /**
- * @api {put} /categories Update a category
+ * @api {put} /categories/:id Update a category
  * @apiName PutCategory
  * @apiGroup Categories
  *
@@ -123,8 +127,8 @@ categoriesRouter.route("/:id").delete(authenticateToken, deleteCategory);
  *
  * @apiBody {String{2..50}} name Category name.
  *
- * @apiSuccess {Object} message Category updated.
- * @apiSuccess {Object} categoryId Category object's ID.
+ * @apiSuccess {String} message Category updated.
+ * @apiSuccess {Number} categoryId Category object's ID.
  *
  * @apiError (401 Unauthorized) Unauthorized Missing or invalid token.
  * @apiError (403 Forbidden) Forbidden You don't have permission to update category.
