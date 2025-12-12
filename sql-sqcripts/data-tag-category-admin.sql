@@ -120,9 +120,9 @@ INSERT INTO `announcements` (`title`, `text`, `filename`) VALUES
 ("New Seasonal Menu Available!",
 "We are excited to introduce our new seasonal menu starting from XX.XX. Come and enjoy fresh flavors inspired by the season!",
 "seasonal_menu.jpg"),
-("New Seasonal Menu Available!",
-"We are excited to introduce our new seasonal menu starting from XX.XX. Come and enjoy fresh flavors inspired by the season!",
-"seasonal_menu.jpg");
+("Limited-Time Discount",
+"Enjoy a special -20% discount on all pizzas ordered online until XX.XX. Don't miss out on this limited-time offer!",
+"discount_img.jpg");
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
